@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('settings', function (Blueprint $table) {
             $table->string('contact_image',255)->nullable();
             $table->string('pages_background_image',255)->nullable();
+            $table->string('faqs_image',255)->nullable();
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('settings', function (Blueprint $table) {
             $table->dropColumn('contact_image');
             $table->dropColumn('pages_background_image');
+            $table->dropColumn('faqs_image');
         });
     }
 };

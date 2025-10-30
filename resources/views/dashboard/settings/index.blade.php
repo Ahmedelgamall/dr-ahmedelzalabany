@@ -83,7 +83,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->logo, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('logo') }} 293 * 81
+                                    {{ getTranslatedWords('logo') }} 170 * 107
                                     <div class="custom-file">
                                         <input type="file" name="logo" class="custom-file-input"
                                             id="validatedCustomFile">
@@ -104,7 +104,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->about_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('about_us_image') }} 650 * 650
+                                    {{ getTranslatedWords('about_us_image') }} 570 * 500
                                     <div class="custom-file">
                                         <input type="file" name="about_image" class="custom-file-input"
                                             id="validatedCustomFile">
@@ -120,28 +120,30 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    @if ($setting->why_us_image != '')
+                                    @if ($setting->faqs_image != '')
                                         <label for="email"
-                                            class="form-label">{{ getTranslatedWords('current why_us_image') }}</label>
+                                            class="form-label">{{ getTranslatedWords('current faqs image') }}</label>
                                         <img class="img-fluid"
-                                            src="{{ route('file_show', ['filename' => $setting->why_us_image, 'path' => 'settings']) }}" /><br>
+                                            src="{{ route('file_show', ['filename' => $setting->faqs_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('why_us_image') }} 876 * 1328
+                                    {{ getTranslatedWords('faqs image') }} 570 * 635
                                     <div class="custom-file">
-                                        <input type="file" name="why_us_image" class="custom-file-input"
+                                        <input type="file" name="faqs_image" class="custom-file-input"
                                             id="validatedCustomFile">
                                         <label class="custom-file-label"
-                                            for="validatedCustomFile">{{ getTranslatedWords('why_us_image') }}</label>
+                                            for="validatedCustomFile">{{ getTranslatedWords('faqs image') }}</label>
                                         <div class="invalid-feedback">
 
                                         </div>
                                     </div>
-                                    @error('why_us_image')
-                                        <div class="text-danger">{{ $errors->first('why_us_image') }}</div>
+                                    @error('faqs_image')
+                                        <div class="text-danger">{{ $errors->first('faqs_image') }}</div>
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 col-md-6">
+                                
+
+                                {{--  <div class="mb-3 col-md-6">
                                     <label for="email" class="form-label">{{ getTranslatedWords('facebook link') }}</label>
                                     <input type="url" value="{{ $setting->facebook_link }}" class="form-control" name="facebook_link"
                                         placeholder="{{ getTranslatedWords('facebook link') }}">
@@ -166,7 +168,7 @@
                                     @error('youtube_link')
                                         <div class="text-danger">{{ $errors->first('youtube_link') }}</div>
                                     @enderror
-                                </div>
+                                </div>--}}
 
                                 <div class="mb-3 col-md-6">
                                     @component('components.input_trans', [
@@ -187,7 +189,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->home_banner_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('home banner image') }} 1920 * 1280
+                                    {{ getTranslatedWords('home banner image') }} 955 * 775
                                     <div class="custom-file">
                                         <input type="file" name="home_banner_image" class="custom-file-input"
                                             id="validatedCustomFile">
@@ -241,16 +243,16 @@
                                 <div class="mb-3 col-md-12">
                                     @if ($setting->steps_image != '')
                                         <label for="email"
-                                            class="form-label">{{ getTranslatedWords('current steps image') }}</label>
+                                            class="form-label">{{ getTranslatedWords('current services home page middle image') }}</label>
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->steps_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('steps image') }}  1920 x 1280
+                                    {{ getTranslatedWords('services home page middle image') }}  497 x 600
                                     <div class="custom-file">
                                         <input type="file" name="steps_image" class="custom-file-input"
                                             id="validatedCustomFile">
                                         <label class="custom-file-label"
-                                            for="validatedCustomFile">{{ getTranslatedWords('steps image') }}</label>
+                                            for="validatedCustomFile">{{ getTranslatedWords('services home page middle image') }}</label>
                                         <div class="invalid-feedback">
 
                                         </div>
@@ -267,7 +269,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->appointment_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('appointment image') }} 1920 * 1280
+                                    {{ getTranslatedWords('appointment image') }} 750 * 877
                                     <div class="custom-file">
                                         <input type="file" name="appointment_image" class="custom-file-input"
                                             id="validatedCustomFile">
@@ -321,16 +323,16 @@
                                 <div class="mb-3 col-md-6">
                                     @if ($setting->contact_image != '')
                                         <label for="email"
-                                            class="form-label">{{ getTranslatedWords('current contact image') }}</label>
+                                            class="form-label">{{ getTranslatedWords('current testimonial home page cover image') }}</label>
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->contact_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('contact image') }} 453 * 650
+                                    {{ getTranslatedWords('testimonial home page cover image') }} 605 * 927
                                     <div class="custom-file">
                                         <input type="file" name="contact_image" class="custom-file-input"
                                             id="validatedCustomFile">
                                         <label class="custom-file-label"
-                                            for="validatedCustomFile">{{ getTranslatedWords('contact image') }}</label>
+                                            for="validatedCustomFile">{{ getTranslatedWords('testimonial home page cover image') }}</label>
                                         <div class="invalid-feedback">
 
                                         </div>
@@ -347,7 +349,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->pages_background_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('pages background image') }} 1920 x 1280
+                                    {{ getTranslatedWords('pages background image') }} 1920 x 278
                                     <div class="custom-file">
                                         <input type="file" name="pages_background_image" class="custom-file-input"
                                             id="validatedCustomFile">

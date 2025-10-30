@@ -49,7 +49,7 @@
 
                             <div class="mb-3 col-md-6">
                                
-                                {{ getTranslatedWords('image') }} 300 * 100
+                                {{ getTranslatedWords('image') }} 422 * 400
                                 <div class="custom-file">
                                     <input type="file" name="image" class="custom-file-input"
                                         id="validatedCustomFile">

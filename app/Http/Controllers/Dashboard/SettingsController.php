@@ -92,16 +92,16 @@ class SettingsController extends Controller
             ['system_name','required'],
         ]);
         
-        $data = $request->except(['logo','about_image','why_us_image','home_banner_image','steps_image','contact_image','appointment_image','pages_background_image']);
+        $data = $request->except(['logo','about_image','why_us_image','home_banner_image','steps_image','contact_image','appointment_image','pages_background_image','faqs_image']);
         $setting = Setting::first();
         
         if ($request->has('logo')) {
-            $image = upload_image($request, 'logo', 293, 81, 'settings');
+            $image = upload_image($request, 'logo', 170, 107, 'settings');
             $data['logo'] = $image;
         }
 
         if ($request->has('about_image')) {
-            $image = upload_image($request, 'about_image', 650, 650, 'settings');
+            $image = upload_image($request, 'about_image', 570, 500, 'settings');
             $data['about_image'] = $image;
         }
 
@@ -111,31 +111,36 @@ class SettingsController extends Controller
         }
 
         if ($request->has('home_banner_image')) {
-            $image = upload_image($request, 'home_banner_image', 1920, 1280, 'settings');
+            $image = upload_image($request, 'home_banner_image', 955, 775, 'settings');
             $data['home_banner_image'] = $image;
         }
 
         if ($request->has('steps_image')) {
-            $image = upload_image($request, 'steps_image', 1920, 1280, 'settings');
+            $image = upload_image($request, 'steps_image', 497, 600, 'settings');
             $data['steps_image'] = $image;
         }
 
         if ($request->has('appointment_image')) { 
-            $image = upload_image($request, 'appointment_image', 1920, 1280, 'settings');
+            $image = upload_image($request, 'appointment_image', 750 , 877, 'settings');
             $data['appointment_image'] = $image;
         }
 
         if ($request->has('contact_image')) { 
-            $image = upload_image($request, 'contact_image', 453, 650, 'settings');
+            $image = upload_image($request, 'contact_image', 605, 927, 'settings');
             $data['contact_image'] = $image;
         }
 
 
         if ($request->has('pages_background_image')) { 
-            $image = upload_image($request, 'pages_background_image', 1920, 1280, 'settings');
+            $image = upload_image($request, 'pages_background_image', 1920, 278, 'settings');
             $data['pages_background_image'] = $image;
         }
 
+        if ($request->has('faqs_image')) { 
+            $image = upload_image($request, 'faqs_image', 570, 635, 'settings');
+            $data['faqs_image'] = $image;
+        }
+        
         
         
          

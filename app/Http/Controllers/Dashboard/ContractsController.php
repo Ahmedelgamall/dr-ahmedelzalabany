@@ -116,7 +116,7 @@ class ContractsController extends Controller
         
         $data = $request->except(['image']);
         if ($request->image != '') {
-            $image = upload_image($request, 'image', 300, 100, 'settings');
+            $image = upload_image($request, 'image', 422 , 400, 'settings');
             $data['image'] = $image;
         }
         $row = Contract::create($data);
@@ -168,7 +168,7 @@ class ContractsController extends Controller
         
         $data = $request->except(['image']);
         if ($request->image != '') {
-            $image = upload_image($request, 'image', 300, 100, 'settings');
+            $image = upload_image($request, 'image', 422 , 400, 'settings');
             $data['image'] = $image;
         }
 

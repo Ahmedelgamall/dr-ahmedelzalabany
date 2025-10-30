@@ -1,7 +1,7 @@
 <label for="email" class="form-label">{{ $label }}</label>
 
 
-@foreach (['ar', 'en'] as $lang)
+@foreach (['ar'] as $lang)
     @if ($lang == 'ar')
         @php
             $dir = 'rtl';

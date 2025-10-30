@@ -106,7 +106,7 @@ class ServicesController extends Controller
         ]);
         $data = $request->except(['image']);
         if ($request->image != '') {
-            $image = upload_image($request, 'image', 300, 300, 'settings');
+            $image = upload_image($request, 'image', 150, 150, 'settings');
             $data['image'] = $image;
         }
         $row = Service::create($data);
@@ -157,7 +157,7 @@ class ServicesController extends Controller
         ]);
         $data = $request->except(['image']);
         if ($request->image != '') {
-            $image = upload_image($request, 'image', 300, 300, 'settings');
+            $image = upload_image($request, 'image', 150, 150, 'settings');
             $data['image'] = $image;
         }
 

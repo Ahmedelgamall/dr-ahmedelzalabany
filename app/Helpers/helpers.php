@@ -33,7 +33,7 @@ if (!function_exists('validate_trans')) {
     {
         $validate = [];
         //foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties) {
-        foreach (['ar','en'] as $l) {
+        foreach (['ar'] as $l) {
             foreach ($params as $param) {
                 
                 $validate["$param[0]:$l"] = "$param[1]";
@@ -127,4 +127,8 @@ function getTranslatedWords($word)
         File::put($file, json_encode($translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
     return $translations[$word];
+}
+
+function getLanguages(){
+    return ['ar'];
 }

@@ -1,57 +1,40 @@
 @extends('front.layouts.app')
 
 @section('content')
-    <main class="bg-white">
-        <section class="heading-wrapper" data-bg="{{ route('file_show', [settings('pages_background_image'), 'settings']) }}">
-            <div class="dextheme-container">
-                <div class="title-breadcrumb">
-                    <h2>{{ getTranslatedWords('contracts') }}</h2>
-                    <div class="breadcrumb-wrapper">
-                        <p><a href="{{ route('home') }}">{{ getTranslatedWords('home') }}</a> -
-                            {{ getTranslatedWords('contracts') }}
-                        </p>
-                    </div>
-                </div>
+    <section class="page-title-area page-title-bg"
+        style="background-image: url({{ route('file_show', [settings('pages_background_image'), 'settings']) }});">
+        <div class="container">
+            <h1 class="page-title">{{ getTranslatedWords('contracts') }}</h1>
+
+            <ul class="breadcrumb-nav">
+                <li><a href="{{ route('home') }}">{{ getTranslatedWords('home') }}</a></li>
+                <li><i class="fas fa-angle-left"></i></li>
+                <li>{{ getTranslatedWords('contracts') }}</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="gallery-section section-gap-top section-gap">
+        <div class="container-fluid fluid-70">
+            <div class="section-heading text-center mb-40">
+                <span class="tagline">{{ getTranslatedWords('contracts') }}</span>
+                <h2 class="title">{{ getTranslatedWords('our success partners') }}</h2>
             </div>
-        </section>
-        <section class="client-logo-section bg-white">
-            <div class="dextheme-container">
-                <div data-swiper-active="" data-swiper-slides-per-view="5" data-swiper-space-between="35"
-                    data-swiper-loop="true" data-swiper-autoplay-delay="4000" data-swiper-navigation="false"
-                    data-swiper-breakpoints="{&quot;320&quot;: {&quot;slidesPerView&quot;: 1}, &quot;768&quot;: {&quot;slidesPerView&quot;: 5}}">
-                    <div class="dextheme-swiper swiper-fade position-relative overflow-hidden mb-5">
-                        <div class="swiper-wrapper">
-                            @foreach (App\Models\Contract::latest()->get() as $contract)
-                                <div class="swiper-slide">
-                                    <img src="{{ route('file_show', [$contract->image, 'settings']) }}" width="100%">
-                                    <h5 class="card-title">{{ $contract->title }}</h5>
-                                </div>
-                            @endforeach
+            <div class="row gallery-loop justify-content-center">
+                @foreach (App\Models\Contract::get() as $c)
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="gallery-item-one mt-30">
+                            <div class="gallery-thumbnail">
+                                <img src="{{ route('file_show', [$c->image, 'settings']) }}" alt="Image">
+                            </div>
+
                         </div>
                     </div>
-                </div>
+                @endforeach
+
+
             </div>
-        </section>
-        <section class="wellness-journey-section dextheme-section-padding"
-            data-bg="{{ route('file_show', [settings('appointment_image'), 'settings']) }}">
-            <div class="dextheme-container my-4">
-                <div class="heading-section text-center mb-3 dextheme-w-65 mx-auto">
-                    <h1 class="heading-title text-white mb-4 dextheme-animation" data-animate="animate__slideInUp"
-                        data-delay-step="250ms">{{ getTranslatedWords('book appointment') }}</h1>
-                    <p class="text-white"> {{ getTranslatedWords('book appointment more easily and confortable') }}</p>
-                </div>
-                <div class="text-center">
-                    <a href="{{ route('appointment') }}" class="dextheme-btn outline-white hover-secondary mt-4">
-                        {{ getTranslatedWords('press here') }}
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
    
-
-   
-
-
-
 @endsection

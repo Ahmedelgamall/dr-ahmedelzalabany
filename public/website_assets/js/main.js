@@ -1,376 +1,569 @@
-document.addEventListener('DOMContentLoaded', function() {
-	console.log('dom ready');
+/*-----------------------------------------------------------------------------------
+	Template Name: Seeva - Medical and Dental HTML Template
+	Template URI: https://webtend.net/demo/html/qolle/
+	Author: WebTend
+	Author URI:  https://webtend.net/
+	Version: 1.1
 
-  function counter() {
-    const counters = document.querySelectorAll('.counter');
+	Note: This is Main Js file
+-----------------------------------------------------------------------------------
+	Js INDEX
+	===================
+	##. Main Menu
+	##. Sticky Header
+	##. Hero Slider
+	##. Slider Animation
+	##. Testimonials Slider One
+	##. Testimonials Slider Two
+	##. Testimonials Slider Three
+	##. Nice Select
+	##. Latest Blog Button Effect
+	##. Doctor Boxes Hover
+	##. Accordion Class Toggle
+	##. Counter
+	##. Logo Slider
+	##. Service Slider
+	##. Doctors Slider Two
+	##. Product Gallery
+	##. Gallery Filter
+	##. Gallery Popup
+	##. Video Popup
+	##. Progress Bar
+	##. Progress Carousel
+	##. Preloader
+	##. Back To Top
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = +el.getAttribute('data-count');
-          const suffix = el.getAttribute('data-suffix') || '';
+-----------------------------------------------------------------------------------*/
+(function ($) {
+	"use strict";
 
-          const countUp = new window.countUp.CountUp(el, target, { suffix: suffix });
+	// ===== Main Menu
+	function mainMenu() {
+		const navbarToggler = $(".navbar-toggler"),
+			siteMenu = $(".site-menu"),
+			mobilePanel = $(".mobile-slide-panel"),
+			mobilePanelMenu = $(".mobile-menu"),
+			panelOverly = $(".panel-overlay"),
+			navClose = $(".panel-close"),
+			canvasBtn = $(".off-canvas-btn"),
+			canvasPanel = $(".off-canvas-panel");
+		// Panel Click Event
+		navbarToggler.on("click", function (e) {
+			e.preventDefault();
+			mobilePanel.toggleClass("show-panel");
+		});
+		canvasBtn.on("click", function (e) {
+			e.preventDefault();
+			canvasPanel.toggleClass("show-panel");
+		});
+		navClose.on("click", function (e) {
+			e.preventDefault();
+			mobilePanel.removeClass("show-panel");
+			canvasPanel.removeClass("show-panel");
+		});
+		panelOverly.on("click", function (e) {
+			e.preventDefault();
+			mobilePanel.removeClass("show-panel");
+			canvasPanel.removeClass("show-panel");
+		});
+		// Adds toggle button to li items that have children
+		siteMenu.find("li a").each(function () {
+			if ($(this).next().length > 0) {
+				$(this).append('<span class="dd-trigger"><i class="far fa-plus"></i></span>');
+			}
+		});
+		mobilePanelMenu.find("li a").each(function () {
+			if ($(this).next().length > 0) {
+				$(this).append('<span class="dd-trigger"><i class="fas fa-angle-down"></i></span>');
+			}
+		});
+		// Expands the dropdown menu on each click
+		mobilePanelMenu.find(".dd-trigger").on("click", function (e) {
+			e.preventDefault();
+			$(this).parent().parent("li").children("ul.sub-menu").stop(true, true).slideToggle(350);
+			$(this).toggleClass("sub-menu-opened");
+		});
+	}
 
-          if (!countUp.error) {
-            countUp.start();
-          } else {
-            console.error(countUp.error);
-          }
+	// ==== Sticky Header
+	function stickyHeader() {
+		const scroll_top = $(window).scrollTop(),
+			siteHeader = $('.template-header');
+		if (siteHeader.hasClass('sticky-header')) {
+			if (scroll_top < 110) {
+				siteHeader.removeClass('sticky-on');
+			} else {
+				siteHeader.addClass('sticky-on');
+			}
+		}
+	}
 
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.1 });
+	// ===== Hero Slider
+	function heroSlider() {
+		const heroSlider = $(".hero-slider");
+		heroSlider.each(function () {
+			const slider = $(this).find(".hero-slider-active"),
+				sliderFirst = slider.find(".single-hero-slider:first-child"),
+				sliderArrow = $(this).find(".hero-slider-arrow");
+			slider.on("init", function (e, slick) {
+				var firstAnimatingElements = sliderFirst.find("[data-animation]");
+				slideanimate(firstAnimatingElements);
+			});
+			slider.on("beforeChange", function (e, slick, currentSlide, nextSlide) {
+				var animatingElements = $('div.slick-slide[data-slick-index="' + nextSlide + '"]').find("[data-animation]");
+				slideanimate(animatingElements);
+			});
+			slider.slick({
+				infinite: true,
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				autoplay: false,
+				autoplaySpeed: 5000,
+				speed: 500,
+				arrows: true,
+				fade: false,
+				dots: false,
+				swipe: true,
+				nextArrow: '<button class="slick-arrow next-arrow"><i class="far fa-angle-right"></i></button>',
+				prevArrow: '<button class="slick-arrow prev-arrow"><i class="far fa-angle-left"></i></button>',
+				appendArrows: sliderArrow,
+				responsive: [{
+					breakpoint: 768,
+					settings: {
+						arrows: false,
+					},
+				},],
+			});
+		});
+	}
 
-    counters.forEach(el => observer.observe(el));
-  }
+	// ===== Slider Animation
+	function slideanimate(elements) {
+		var animationEndEvents = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
+		elements.each(function () {
+			var $this = $(this);
+			var animationDelay = $this.data("delay");
+			var animationType = "animated " + $this.data("animation");
+			$this.css({
+				"animation-delay": animationDelay,
+				"-webkit-animation-delay": animationDelay,
+			});
+			$this.addClass(animationType).one(animationEndEvents, function () {
+				$this.removeClass(animationType);
+			});
+		});
+	}
 
-  function loadCircleProgress() {
-    const bars = document.querySelectorAll('.dextheme-progress');
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          const el = entry.target;
-          const value = parseFloat(el.getAttribute('data-value')) || 0;
+	// ===== Testimonials Slider One
+	function testimonialSliderOne() {
+		const slider = $(".testimonial-slider-one");
+		slider.slick({
+			infinite: true,
+			dots: true,
+			arrows: false,
+			speed: 500,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			autoplay: true,
+			autoplaySpeed: 5000,
+		});
+	}
 
-          const bar = new ProgressBar.Circle(el, {
-            strokeWidth: 4,
-            trailWidth: 3,
-            trailColor: '#643e02',
-            easing: 'easeInOut',
-            duration: 1400,
-            text: {
-              autoStyleContainer: false
-            },
-            from: { color: '#FF9C00', width: 4 },
-            to: { color: '#FF9C00', width: 4 },
-            // Set default step function for all animate calls
-            step: function(state, circle) {
-              circle.path.setAttribute('stroke', state.color);
-              circle.path.setAttribute('stroke-width', state.width);
+	// ===== Testimonials Slider Two
+	function testimonialSliderTwo() {
+		const slider = $(".testimonial-slider-two"),
+			sliderArrow = $(".testimonial-slider-arrow");
+		slider.slick({
+			infinite: true,
+			dots: false,
+			arrows: true,
+			speed: 500,
+			slidesToShow: 2,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			nextArrow: '<button class="slick-arrow next-arrow"><i class="far fa-angle-right"></i></button>',
+			prevArrow: '<button class="slick-arrow prev-arrow"><i class="far fa-angle-left"></i></button>',
+			appendArrows: sliderArrow,
+			responsive: [{
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 1,
+				},
+			},],
+		});
+	}
 
-              var value = Math.round(circle.value() * 100);
-              if (value === 0) {
-                circle.setText('');
-              } else {
-                circle.setText(value + '%');
-              }
+	// ===== Testimonials Slider Three
+	function testimonialSliderThree() {
+		const sliderWrap = $(".testimonial-slider-three"),
+			contentSlider = sliderWrap.find(".content-wrapper"),
+			thumbSlider = sliderWrap.find(".thumb-wrapper"),
+			sliderArrow = sliderWrap.find(".slider-arrows");
+		thumbSlider.slick({
+			infinite: true,
+			dots: false,
+			arrows: false,
+			speed: 500,
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			asNavFor: contentSlider,
+			centerMode: true,
+			centerPadding: '0',
+			focusOnSelect: true
+		});
+		contentSlider.slick({
+			infinite: true,
+			dots: false,
+			arrows: true,
+			speed: 500,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			nextArrow: '<button class="slick-arrow next-arrow"><i class="far fa-angle-right"></i></button>',
+			prevArrow: '<button class="slick-arrow prev-arrow"><i class="far fa-angle-left"></i></button>',
+			asNavFor: thumbSlider,
+			appendArrows: sliderArrow,
+			responsive: [{
+				breakpoint: 768,
+				settings: {
+					arrows: false,
+				},
+			},],
+		});
+	}
 
-            }
-          });
+	// ==== Nice Select
+	function activeNiceSelect() {
+		$("select").niceSelect();
+	}
 
-          bar.animate(value);  // Number from 0.0 to 1.0
+	// ===== A function For Content How on Hover
+	function contentShowHover(mainElement, hoverElement) {
+		mainElement.each(function () {
+			var $this = $(this),
+				effectItem = $this.find(hoverElement);
+			effectItem.hide();
+			$this.hover(function () {
+				effectItem.slideDown(300);
+			}, function () {
+				effectItem.slideUp(300);
+			});
+		});
+	}
 
-          observer.unobserve(el)
-        }
-      });
-    }, { threshold: 0.5 });
+	// ===== Latest Blog Button Effect
+	function latestBlogButtonEffect() {
+		var mainElement = $(".latest-blog-one"),
+			buttonArea = $(".btn-area");
+		contentShowHover(mainElement, buttonArea);
+	}
 
-    bars.forEach(bar => observer.observe(bar));
-  }
+	// ===== Doctor Boxes Hover
+	function doctorBoxesHover() {
+		var mainElement = $(".doctor-box-one"),
+			buttonArea = $(".social-links");
+		contentShowHover(mainElement, buttonArea);
+	}
 
-  function loadLineProgress() {
-    const containers = document.querySelectorAll('.progress-container');
+	// ===== Accordion Class Toggle
+	function accordionClassToggle() {
+		$(".accordion .accordion-header").on("click", function (event) {
+			$(".accordion .active-accordion").removeClass("active-accordion");
+			$(this).parent().addClass("active-accordion");
+			event.preventDefault();
+		});
+	}
 
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const container = entry.target;
-          const lineEl = container.querySelector('.progress-line');
-          const labelEl = container.querySelector('.progress-label');
-          const value = parseFloat(lineEl.getAttribute('data-value')) || 0;
-          const color = lineEl.getAttribute('data-color') || '#3498db';
+	// ==== Counter
+	function counterUp() {
+		$(".counter-item").on("inview", function (event, isInView) {
+			if (isInView) {
+				$(this).find(".counter").each(function () {
+					$(this).prop("Counter", 0).animate({
+						Counter: $(this).text(),
+					}, {
+						duration: 4000,
+						easing: "swing",
+						step: function (now) {
+							$(this).text(Math.ceil(now));
+						},
+					});
+				});
+				$(this).unbind("inview");
+			}
+		});
+	}
 
-          const bar = new ProgressBar.Line(lineEl, {
-            strokeWidth: 2,
-            easing: 'easeInOut',
-            duration: 1400,
-            color: color,
-            trailColor: '#eee',
-            trailWidth: 2,
-            svgStyle: { width: '100%', height: '100%' },
-            step: (state, bar) => {
-              const val = Math.round(bar.value() * 100) + '%';
-              labelEl.textContent = val;
+	// ===== Logo Slider
+	function logoSlider() {
+		const slider = $(".partner-logo-slider");
+		slider.slick({
+			infinite: true,
+			dots: false,
+			arrows: false,
+			speed: 500,
+			slidesToShow: 5,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			responsive: [{
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 3,
+				},
+			}, {
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+				},
+			}, {
+				breakpoint: 425,
+				settings: {
+					slidesToShow: 1,
+				},
+			},],
+		});
+	}
 
-              const percent = bar.value();
-              const containerWidth = lineEl.offsetWidth;
-              const labelWidth = labelEl.offsetWidth;
-              let left = percent * containerWidth - labelWidth / 2;
+	// ===== Service Slider
+	function serviceSlider() {
+		const slider = $(".service-slider");
+		slider.slick({
+			infinite: true,
+			dots: false,
+			arrows: false,
+			speed: 500,
+			slidesToShow: 4,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			responsive: [{
+				breakpoint: 1400,
+				settings: {
+					slidesToShow: 3,
+				},
+			}, {
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 2,
+				},
+			}, {
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 1,
+				},
+			},],
+		});
+	}
 
-              if (left < 0) left = 0;
-              if (left + labelWidth > containerWidth) left = containerWidth - labelWidth;
+	// ===== Doctors Slider Two
+	function doctorSliderTwo() {
+		const slider = $(".doctors-slider-two");
+		slider.slick({
+			infinite: true,
+			dots: false,
+			arrows: false,
+			speed: 500,
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			responsive: [{
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 2,
+				},
+			}, {
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 1,
+				},
+			},],
+		});
+	}
 
-              labelEl.style.left = `${left}px`;
-            }
-          });
+	// ===== Product Gallery
+	function productGallery() {
+		const sliderWrap = $(".product-gallery-wrapper"),
+			mainSlider = sliderWrap.find(".main-gallery"),
+			thumbSlider = sliderWrap.find(".thumb-gallery");
+		thumbSlider.slick({
+			infinite: true,
+			dots: false,
+			arrows: false,
+			speed: 500,
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			asNavFor: mainSlider,
+			centerMode: false,
+			focusOnSelect: true
+		});
+		mainSlider.slick({
+			infinite: true,
+			dots: false,
+			arrows: false,
+			speed: 500,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			asNavFor: thumbSlider,
+		});
+	}
 
-          bar.animate(value);
-          obs.unobserve(container); // hanya jalankan sekali
-        }
-      });
-    }, { threshold: 0.5 }); // animasi dimulai saat 50% container terlihat
+	// ===== Gallery Filter
+	function galleryFilter() {
+		$('.gallery-section').imagesLoaded(function () {
+			const items = $('.gallery-filter-item').isotope();
+			// items on button click
+			$('.gallery-filter').on('click', 'li', function (e) {
+				const filterValue = $(this).attr('data-filter');
+				items.isotope({
+					filter: filterValue
+				});
+			});
+			// menu active class
+			$('.gallery-filter li').on('click', function (event) {
+				$('.gallery-filter .active').removeClass('active');
+				$(this).addClass('active');
+				event.preventDefault();
+			});
+		});
+	}
 
-    containers.forEach(container => observer.observe(container));
-  }
+	// ===== Gallery Popup
+	function galleryPopup() {
+		$('.plus-icon').magnificPopup({
+			type: 'image',
+			gallery: {
+				enabled: true
+			},
+		});
+	}
 
-  function loadBackground() {
-    const elements = document.querySelectorAll('[data-bg]');
+	// ===== Video Popup
+	function videoPopup() {
+		$('.video-popup').magnificPopup({
+			type: 'iframe',
+		});
+	}
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries, observerInstance) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            const bg = el.dataset.bg;
-            if (bg) {
-              el.style.backgroundImage = `url(${bg})`;
-              el.style.backgroundSize = 'cover'; // optional
-              el.style.backgroundPosition = 'center center'; // optional
-              el.style.backgroundRepeat = 'no-repeat';
-              observerInstance.unobserve(el); // stop observing setelah load
-            }
-          }
-        });
-      }, {
-        rootMargin: '0px 0px 200px 0px', // mulai load sedikit sebelum elemen muncul
-        threshold: 0.1
-      });
+	// ===== Progress Bar
+	function progressBar() {
+		$(".progress-bar-wrapper").each(function () {
+			const percentage = $(this).data('percentage'),
+				progressLineWrap = $(this).find('.progress-line-wrap'),
+				progressLine = $(this).find('.progress-line'),
+				progressLineWidth = percentage + '%',
+				progressLineBg = $(this).data('line-bg'),
+				progressLineColor = $(this).data('line-color');
+			progressLineWrap.css("background-color", progressLineBg);
+			progressLine.css("background-color", progressLineColor);
+			$(this).on("inview", function (event, isInView) {
+				if (isInView) {
+					progressLine.css("width", progressLineWidth);
+					$(this).unbind("inview");
+				}
+			});
+		});
+	}
 
-      elements.forEach(el => observer.observe(el));
-    } else {
-      // Fallback untuk browser lama tanpa IntersectionObserver
-      elements.forEach(el => {
-        const bg = el.dataset.bg;
-        if (bg) {
-          el.style.backgroundImage = `url(${bg})`;
-          el.style.backgroundSize = 'cover';
-          el.style.backgroundPosition = 'center center';
-          el.style.backgroundRepeat = 'no-repeat';
-        }
-      });
-    }
-  }
+	// ===== Progress Carousel
+	function productCarousel() {
+		const slider = $('.product-carousel'),
+			sliderArrow = $('.product-carousel-arrows');
+		slider.slick({
+			infinite: true,
+			dots: true,
+			arrows: true,
+			speed: 500,
+			slidesToShow: 4,
+			slidesToScroll: 1,
+			autoplay: false,
+			autoplaySpeed: 5000,
+			nextArrow: '<button class="slick-arrow next-arrow"><i class="far fa-angle-right"></i></button>',
+			prevArrow: '<button class="slick-arrow prev-arrow"><i class="far fa-angle-left"></i></button>',
+			appendArrows: sliderArrow,
+			responsive: [{
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 2,
+				},
+			}, {
+				breakpoint: 576,
+				settings: {
+					slidesToShow: 1,
+				},
+			},],
+		});
+	}
 
-  function dexthemeAnimate() {
-    const animateElements = document.querySelectorAll('.dextheme-animation');
+	// ===== Back To Top
+	function backToTop() {
+		$('.back-to-top').on('click', function (event) {
+			event.preventDefault();
+			$('html, body').animate({
+				scrollTop: 0,
+			}, 1500);
+		});
+	}
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const step = el.dataset.delayStep ? parseInt(el.dataset.delayStep) : 200;
+	// ==== Preloader
+	function preloader() {
+		$('#preloader').delay(300).fadeOut(400);
+	}
 
-          setTimeout(() => {
-            const animationClass = entry.target.dataset.animate;
-            el.classList.add('animate__animated', animationClass, 'animated-visible');
-            observer.unobserve(el); // Optional, kalau animasi hanya mau sekali
-          }, index * step);
-        }
-      });
-    }, { threshold: 0.1 });
+	/*---------------------
+	=== Document Ready  ===
+	----------------------*/
+	$(document).ready(function () {
+		mainMenu();
+		heroSlider();
+		activeNiceSelect();
+		testimonialSliderOne();
+		testimonialSliderTwo();
+		testimonialSliderThree();
+		latestBlogButtonEffect();
+		doctorBoxesHover();
+		accordionClassToggle();
+		counterUp();
+		logoSlider();
+		serviceSlider();
+		doctorSliderTwo();
+		productGallery();
+		galleryFilter();
+		galleryPopup();
+		videoPopup();
+		progressBar();
+		productCarousel();
+		backToTop();
+	});
 
-    animateElements.forEach(el => observer.observe(el));
-  }
+	/*---------------------
+	=== Window Scroll  ===
+	----------------------*/
+	$(window).on("scroll", function () {
+		// ===== Show Back to Top
+		if ($(this).scrollTop() > 600) {
+			$('.back-to-top').addClass('active')
+		} else {
+			$('.back-to-top').removeClass('active')
+		}
+		stickyHeader()
+	});
 
-  function loadSwiperSlide() {
-    const swipers = document.querySelectorAll("[data-swiper-active]");
-    swipers.forEach(container => {
-      const swiperElement = container.querySelector(".swiper");
-      const options = container.getAttribute("data-swiper-options");
-      
-      // Parse JSON from data attribute or use default
-      const swiperOptions = options ? JSON.parse(options) : {};
+	/*------------------
+	=== Window Load  ===
+	--------------------*/
+	$(window).on('load', function () {
+		preloader();
+		new WOW().init();
+	});
 
-      // Set default options if not provided
-      const defaultOptions = {
-          slidesPerView: 1,
-          spaceBetween: 20,
-          loop: true,
-          navigation: {
-              nextEl: container.querySelector(".swiper-button-next"),
-              prevEl: container.querySelector(".swiper-button-prev"),
-          },
-          pagination: {
-              el: container.querySelector(".swiper-pagination"),
-              clickable: true,
-          },
-          autoplay: {
-              delay: 3000,
-              disableOnInteraction: false,
-          },
-      };
-
-      // Merge custom options with defaults
-      const finalOptions = {
-          ...defaultOptions,
-          ...swiperOptions,
-      };
-
-      // If navigation is disabled, remove buttons
-      if (swiperOptions.navigation === false) {
-          delete finalOptions.navigation;
-      }
-
-      // Initialize Swiper
-      new Swiper(swiperElement, finalOptions);
-    });
-  }
-
-  try {
-    const swiper = new Swiper('.swiper', {
-      effect: 'fade',
-      loop: true,
-      speed: 1500,
-      autoplay: {
-        delay: 8000,
-        disableOnInteraction: false,
-      },
-      fadeEffect: {
-        crossFade: true,
-      },
-      on: {
-        init: () => triggerKenBurns(),
-        slideChangeTransitionStart: () => triggerKenBurns()
-      }
-    });
-
-    const swiper2 = new Swiper('.swiper-anim', {
-      slidesPerView: 3,
-      spaceBetween: 30,
-      loop: true,
-      speed: 1500,
-      autoplay: {
-        delay: 8000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,  // memungkinkan klik pada dot untuk pindah slide
-      },
-      breakpoints: {
-        320: { slidesPerView: 1 },
-        768: { slidesPerView: 3 }
-      }
-    });
-  } catch(error) {
-    console.log(error)
-  }
-
-  function triggerKenBurns() {
-    const activeSlide = document.querySelector('.swiper-slide-active .kenburns-slide');
-    if (!activeSlide) return;
-    activeSlide.classList.remove('animate');
-    void activeSlide.offsetWidth;
-    activeSlide.classList.add('animate');
-  }
-
-  function startCountdown(targetDate) {
-    try {
-      const updateCountdown = () => {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance <= 0) {
-          clearInterval(interval);
-          document.querySelectorAll('.countdown-item span').forEach(el => el.textContent = '00');
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("days").textContent = days.toString().padStart(4, '0');
-        document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
-        document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
-        document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
-      };
-
-      updateCountdown(); // initial call
-      const interval = setInterval(updateCountdown, 1000);
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  function loadDrawerToggle() {
-    try {
-      const drawerToggle = document.querySelector('.navbar-toggler');
-      const drawerMenu = document.querySelector('.dextheme-menu-drawer');
-      const drawerBackdrop = document.getElementById('drawerBackdrop');
-
-      function closeDrawer() {
-        drawerMenu.classList.remove('active');
-        drawerBackdrop.classList.remove('active');
-      }
-
-      drawerToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Mencegah menutup saat tombol diklik
-        drawerMenu.classList.toggle('active');
-        drawerBackdrop.classList.toggle('active');
-      });
-
-      drawerBackdrop.addEventListener('click', closeDrawer);
-
-      // Menutup drawer saat klik di luar area drawer
-      document.addEventListener('click', (e) => {
-        if (!drawerMenu.contains(e.target) && !drawerToggle.contains(e.target)) {
-          closeDrawer();
-        }
-      });
-    } catch(error) {
-      console.log(error)
-    }
-  }
-
-  function loadSwiperSlideBulk() {
-    try {
-      const swipers = document.querySelectorAll("[data-swiper-active]");
-      swipers.forEach(container => {
-        const swiperElement = container.querySelector(".dextheme-swiper");
-        const options = {
-          slidesPerView: parseInt(container.getAttribute("data-swiper-slides-per-view")) || 1,
-          spaceBetween: parseInt(container.getAttribute("data-swiper-space-between")) || 20,
-          loop: container.getAttribute("data-swiper-loop") === "true",
-          autoplay: container.getAttribute("data-swiper-autoplay-delay") 
-            ? {
-              delay: parseInt(container.getAttribute("data-swiper-autoplay-delay")),
-              disableOnInteraction: false,
-            }
-            : false,
-          navigation: container.getAttribute("data-swiper-navigation") === "false" ? false : {
-            nextEl: container.querySelector(".swiper-button-next"),
-            prevEl: container.querySelector(".swiper-button-prev"),
-          },
-          pagination: {
-            el: container.querySelector(".swiper-pagination"),
-            clickable: true,
-          },
-          breakpoints: JSON.parse(container.getAttribute("data-swiper-breakpoints") || 
-            '{"320": {"slidesPerView": 1}, "768": {"slidesPerView": 2}}'),
-        };
-
-        // Initialize Swiper
-        new Swiper(swiperElement, options);
-      });
-    } catch(error) {
-      console.log(error)
-    }
-  }
-
-  counter();
-  loadBackground();
-  loadCircleProgress();
-  loadLineProgress();
-  dexthemeAnimate();
-  loadSwiperSlide();
-  loadSwiperSlideBulk()
-  loadDrawerToggle();
-
-  const countdownTargetDate = new Date("2040-01-01T00:00:00").getTime();
-  startCountdown(countdownTargetDate);
-});
+})(jQuery);

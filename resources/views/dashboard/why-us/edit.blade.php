@@ -48,7 +48,7 @@
 
                                 </div>
 
-                                <div class="mb-3 col-md-6">
+                                {{--  <div class="mb-3 col-md-6">
                                     @component('components.input_trans', [
                                         'type' => 'textarea',
                                         'label' => getTranslatedWords('description'),
@@ -58,7 +58,7 @@
                                     text
                                     @endcomponent
 
-                                </div>
+                                </div> --}}
 
                                 
 
@@ -69,7 +69,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $row->image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('image') }} 50 * 50
+                                    {{ getTranslatedWords('image') }} 370 * 270
                                     <div class="custom-file">
                                         <input type="file" name="image" class="custom-file-input"
                                             id="validatedCustomFile">

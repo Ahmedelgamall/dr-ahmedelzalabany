@@ -110,11 +110,11 @@ class WhyUsController extends Controller
 
         validate_trans($request, [
             ['title', 'required'],
-            ['text', 'required'],
+           // ['text', 'required'],
         ]);
         $data = $request->except(['image']);
         if ($request->image != '') {
-            $image = upload_image($request, 'image', 50, 50, 'settings');
+            $image = upload_image($request, 'image', 370, 270, 'settings');
             $data['image'] = $image;
         }
         $row = WhyChooseUs::create($data);
@@ -161,11 +161,11 @@ class WhyUsController extends Controller
 
         validate_trans($request, [
             ['title', 'required'],
-            ['text', 'required'],
+            //['text', 'required'],
         ]);
         $data = $request->except(['image']);
         if ($request->image != '') {
-            $image = upload_image($request, 'image', 50, 50, 'settings');
+            $image = upload_image($request, 'image',  370, 270, 'settings');
             $data['image'] = $image;
         }
 

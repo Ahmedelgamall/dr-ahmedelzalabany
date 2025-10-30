@@ -56,7 +56,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $row->image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('image') }} 300 * 100
+                                    {{ getTranslatedWords('image') }} 422 * 400
                                     <div class="custom-file">
                                         <input type="file" name="image" class="custom-file-input"
                                             id="validatedCustomFile">
