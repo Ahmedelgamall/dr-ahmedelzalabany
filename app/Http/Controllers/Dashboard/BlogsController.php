@@ -30,6 +30,7 @@ class BlogsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            
             $query = Blog::all();
             return Datatables::of($query)
                 ->editColumn('id', function ($query) {

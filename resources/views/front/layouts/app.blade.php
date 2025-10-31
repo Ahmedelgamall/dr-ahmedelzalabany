@@ -125,7 +125,7 @@
                                     href="{{ route('contact-us') }}">{{ getTranslatedWords('contact us') }}</a></li>
                             <li @if (\Route::is('services')) class="active" @endif><a
                                     href="{{ route('services') }}">{{ getTranslatedWords('services') }}</a></li>
-                            <li @if (\Route::is('services')) class="active" @endif><a
+                            <li @if (\Route::is('contractsFront')) class="active" @endif><a
                                     href="{{ route('contractsFront') }}">{{ getTranslatedWords('contracts') }}</a>
                             </li>
                             <li @if (\Route::is('blog')) class="active" @endif><a

@@ -250,21 +250,21 @@ div.dataTables_wrapper div.dataTables_filter {
                                 </a>
         </li>
 @endcan
-    @can('list branches')
+    {{--  @can('list branches')
     <li class="menu-item">
           <a href="{{ route('branches.index') }}" class="menu-link">
             <div data-i18n="Without navbar">{{ getTranslatedWords('branches') }}</div>
           </a>
     </li>
-@endcan
+@endcan --}}
    
-@can('list steps')
+{{--  @can('list steps')
     <li class="menu-item">
       <a href="{{ route('steps.index') }}" class="menu-link">
         <div data-i18n="Without navbar">{{ getTranslatedWords('steps') }}</div>
       </a>
     </li>
-@endcan
+@endcan --}}
 @can('list faqs')
     <li class="menu-item">
       <a href="{{ route('faqs.index') }}" class="menu-link">
@@ -286,13 +286,13 @@ div.dataTables_wrapper div.dataTables_filter {
       </a>
     </li>
 @endcan
-@can('list packages')
+{{--  @can('list packages')
     <li class="menu-item">
       <a href="{{ route('packages.index') }}" class="menu-link">
         <div data-i18n="Without navbar">{{ getTranslatedWords('packages') }}</div>
       </a>
     </li>
-@endcan
+@endcan --}}
 @can('list why choose us')
     <li class="menu-item">
       <a href="{{ route('why-us.index') }}" class="menu-link">
@@ -418,7 +418,7 @@ div.dataTables_wrapper div.dataTables_filter {
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
 
-            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+            {{-- <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a  href="@if (App::getLocale() == 'ar') {{ LaravelLocalization::getLocalizedURL('en', null, [], true) }} @else {{ LaravelLocalization::getLocalizedURL('ar', null, [], true) }} @endif" class="nav-link hide-arrow">
                       <i class="bx bx-globe" style="font-size:1.4em"></i>
                      
@@ -428,7 +428,7 @@ div.dataTables_wrapper div.dataTables_filter {
                  
                  
                  
-            </li>
+            </li> --}}
            
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">

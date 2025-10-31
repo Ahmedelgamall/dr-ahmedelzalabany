@@ -23,7 +23,7 @@
     <!--====== Appointment Section Start ======-->
     <section class="appointment-section">
         <div class="appointment-form-three bg-color-secondary">
-            <div class="appointment-image" style="background-image: url(assets/img/appointment/04.jpg);">
+            <div class="appointment-image" style="background-image: url({{ route('file_show', [settings('appointment_image'), 'settings']) }});">
             </div>
             <div class="form-wrap">
                 <div class="section-heading text-center heading-white mb-60">

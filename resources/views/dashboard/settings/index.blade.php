@@ -231,7 +231,7 @@
                                 <div class="mb-3 col-md-6">
                                     @component('components.input_trans', [
                                         'type' => 'textarea',
-                                        'label' => getTranslatedWords('home banner text'),
+                                        'label' => getTranslatedWords('footer description'),
                                         'required' => 'false',
                                         'model' => $setting,
                                     ])

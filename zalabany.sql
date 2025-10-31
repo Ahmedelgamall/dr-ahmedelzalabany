@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2025 at 11:28 PM
+-- Generation Time: Oct 31, 2025 at 06:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sama`
+-- Database: `zalabany`
 --
 
 -- --------------------------------------------------------
@@ -36,16 +36,17 @@ CREATE TABLE `appointments` (
   `time` varchar(50) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `branch_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `name`, `phone`, `type`, `date`, `time`, `notes`, `created_at`, `updated_at`) VALUES
-(2, 'تست', '01002431895', 'اشعة رنين', '2025-04-29', 'After the afternoon', NULL, '2025-04-20 21:44:41', '2025-04-20 21:44:41'),
-(3, 'احمد محمد', '01002431895', 'اشعة رنين', '2025-04-27', 'evening', NULL, '2025-04-23 13:16:17', '2025-04-23 13:16:17');
+INSERT INTO `appointments` (`id`, `name`, `phone`, `type`, `date`, `time`, `notes`, `created_at`, `updated_at`, `branch_id`) VALUES
+(2, 'تست', '01002431895', 'اشعة رنين', '2025-04-29', 'After the afternoon', NULL, '2025-04-20 21:44:41', '2025-04-20 21:44:41', NULL),
+(3, 'احمد محمد', '01002431895', 'اشعة رنين', '2025-04-27', 'evening', NULL, '2025-04-23 13:16:17', '2025-04-23 13:16:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -58,25 +59,26 @@ CREATE TABLE `blogs` (
   `image` varchar(255) DEFAULT NULL,
   `visits` bigint(20) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `language` varchar(10) NOT NULL DEFAULT 'ar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `blogs`
 --
 
-INSERT INTO `blogs` (`id`, `image`, `visits`, `created_at`, `updated_at`) VALUES
-(1, '2048174471403567fe393347053.jpg', 0, '2025-04-15 08:47:15', '2025-04-15 08:47:15'),
-(12, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:01', '2025-04-20 19:47:01'),
-(13, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(14, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(15, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(16, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(17, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(18, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(19, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(20, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(21, '2048174471403567fe393347053.jpg', 0, '2025-04-20 19:47:02', '2025-04-20 19:47:02');
+INSERT INTO `blogs` (`id`, `image`, `visits`, `created_at`, `updated_at`, `language`) VALUES
+(1, '882217619308856904ee85c8989.jpg', 0, '2025-04-15 08:47:15', '2025-10-31 15:16:31', 'ar'),
+(12, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:01', '2025-10-31 15:16:31', 'ar'),
+(13, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(14, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(15, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(16, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(17, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(18, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(19, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(20, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:16:32', 'ar'),
+(21, '882217619308856904ee85c8989.jpg', 0, '2025-04-20 19:47:02', '2025-10-31 15:14:46', 'ar');
 
 -- --------------------------------------------------------
 
@@ -213,8 +215,8 @@ CREATE TABLE `contracts` (
 --
 
 INSERT INTO `contracts` (`id`, `image`, `created_at`, `updated_at`) VALUES
-(1, '4806174470994367fe2937419c2.webp', '2025-04-15 07:37:23', '2025-04-15 07:39:03'),
-(2, '3627174470995567fe29431a122.webp', '2025-04-15 07:39:15', '2025-04-15 07:39:15');
+(1, '485317619308216904ee4576482.jpg', '2025-04-15 07:37:23', '2025-10-31 15:13:41'),
+(2, '518717619308126904ee3ce4737.jpg', '2025-04-15 07:39:15', '2025-10-31 15:13:33');
 
 -- --------------------------------------------------------
 
@@ -381,7 +383,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (32, '2025_04_21_000215_add_new_cols_to_settings', 8),
 (33, '2025_04_21_000224_add_new_cols_to_setting_translations', 8),
 (34, '2025_04_23_144050_create_permission_tables', 9),
-(35, '2025_04_23_211530_add_price_to_packages', 10);
+(35, '2025_04_23_211530_add_price_to_packages', 10),
+(36, '2025_07_27_110710_add_branch_to_appointments', 11),
+(37, '2025_08_25_093149_add_cols_to_setting_translations', 11),
+(38, '2025_08_25_100810_add_contact_image_to_settings', 11),
+(39, '2025_10_16_221133_add_language_to_blogs', 11);
 
 -- --------------------------------------------------------
 
@@ -678,16 +684,16 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`id`, `image`, `created_at`, `updated_at`) VALUES
-(1, '1736174463737467fd0dbe4ddd0.svg', '2025-04-14 11:29:34', '2025-04-14 11:29:34'),
-(4, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:01', '2025-04-20 19:47:01'),
-(5, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(6, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(7, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(8, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(9, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(10, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(11, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
-(12, '1736174463737467fd0dbe4ddd0.svg', '2025-04-20 19:47:02', '2025-04-20 19:47:02');
+(1, '920617619310586904ef325a320.png', '2025-04-14 11:29:34', '2025-04-14 11:29:34'),
+(4, '920617619310586904ef325a320.png', '2025-04-20 19:47:01', '2025-04-20 19:47:01'),
+(5, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
+(6, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
+(7, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
+(8, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
+(9, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
+(10, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
+(11, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-04-20 19:47:02'),
+(12, '920617619310586904ef325a320.png', '2025-04-20 19:47:02', '2025-10-31 15:17:38');
 
 -- --------------------------------------------------------
 
@@ -751,15 +757,18 @@ CREATE TABLE `settings` (
   `youtube_link` varchar(500) DEFAULT NULL,
   `home_banner_image` varchar(255) DEFAULT NULL,
   `steps_image` varchar(255) DEFAULT NULL,
-  `appointment_image` varchar(255) DEFAULT NULL
+  `appointment_image` varchar(255) DEFAULT NULL,
+  `contact_image` varchar(255) DEFAULT NULL,
+  `pages_background_image` varchar(255) DEFAULT NULL,
+  `faqs_image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `settings`
 --
 
-INSERT INTO `settings` (`id`, `email`, `phone`, `logo`, `about_image`, `why_us_image`, `created_at`, `updated_at`, `facebook_link`, `twitter_link`, `youtube_link`, `home_banner_image`, `steps_image`, `appointment_image`) VALUES
-(1, 'test@test.com', '0122222222', '1106174463329767fcfdd179d57.jpg', '7561174463329767fcfdd1d798b.jpg', '1082174463329867fcfdd20dbf4.webp', '2025-04-13 09:17:49', '2025-04-20 22:39:21', 'https://github.com/artesaos/seotools', 'https://github.com/artesaos/seotools', 'https://github.com/artesaos/seotools', '237917450811506803d33eb5b5c.jpg', '646417450811516803d33ff3373.jpg', '99621745195960680593b8d1f7c.webp');
+INSERT INTO `settings` (`id`, `email`, `phone`, `logo`, `about_image`, `why_us_image`, `created_at`, `updated_at`, `facebook_link`, `twitter_link`, `youtube_link`, `home_banner_image`, `steps_image`, `appointment_image`, `contact_image`, `pages_background_image`, `faqs_image`) VALUES
+(1, 'test@test.com', '0122222222', '332017619302566904ec10674f6.jpg', '342317619302566904ec1076897.jpg', '1082174463329867fcfdd20dbf4.webp', '2025-04-13 09:17:49', '2025-10-31 15:04:17', 'https://github.com/artesaos/seotools', 'https://github.com/artesaos/seotools', 'https://github.com/artesaos/seotools', '834017619302566904ec108aba6.jpg', '139517619302566904ec10a7141.png', '207017619302566904ec10e3310.png', '200517619302576904ec1125313.jpg', '403717619302576904ec1148aa0.jpg', '359217619302576904ec1175c22.jpg');
 
 -- --------------------------------------------------------
 
@@ -779,16 +788,18 @@ CREATE TABLE `setting_translations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `working_times` varchar(500) DEFAULT NULL,
   `home_banner_title` varchar(300) DEFAULT NULL,
-  `meta_description` text DEFAULT NULL
+  `meta_description` text DEFAULT NULL,
+  `home_banner_text` text DEFAULT NULL,
+  `footer_description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `setting_translations`
 --
 
-INSERT INTO `setting_translations` (`id`, `setting_id`, `system_name`, `about_us_title`, `about_us_description`, `address`, `locale`, `created_at`, `updated_at`, `working_times`, `home_banner_title`, `meta_description`) VALUES
-(1, 1, 'sama scan', 'about us title', 'about us description about us description about us description about us description about us description about us description about us description', '10 abaas elakaad st nasr city cairo', 'en', '2025-04-14 10:21:38', '2025-04-20 22:39:21', 'sat - thur 1:00 pm - 12:00 am', 'home banner title', 'about us description about us description about us description about us description about us description about us description about us description'),
-(2, 1, 'سما سكان', 'عنوان من نحن', 'وصف من نحن وصف من نحن  وصف من نحن  وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن', '10 ش عباس العقاد مدينة نصر القاهرة', 'ar', '2025-04-14 10:21:38', '2025-04-20 22:39:21', 'السيت - الخميس  ١:٠٠ م - ١٢:٠٠ ص', 'نص بانر الصفحة الرئيسية', 'وصف من نحن وصف من نحن  وصف من نحن  وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن');
+INSERT INTO `setting_translations` (`id`, `setting_id`, `system_name`, `about_us_title`, `about_us_description`, `address`, `locale`, `created_at`, `updated_at`, `working_times`, `home_banner_title`, `meta_description`, `home_banner_text`, `footer_description`) VALUES
+(1, 1, 'sama scan', 'about us title', 'about us description about us description about us description about us description about us description about us description about us description', '10 abaas elakaad st nasr city cairo', 'en', '2025-04-14 10:21:38', '2025-04-20 22:39:21', 'sat - thur 1:00 pm - 12:00 am', 'home banner title', 'about us description about us description about us description about us description about us description about us description about us description', NULL, NULL),
+(2, 1, 'دكتور محمد الزلابانى', 'عنوان من نحن', '<p>وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن وصف من نحن</p>', '10 ش عباس العقاد مدينة نصر القاهرة', 'ar', '2025-04-14 10:21:38', '2025-10-31 15:04:17', 'السيت - الخميس  ١:٠٠ م - ١٢:٠٠ ص', 'نص بانر الصفحة الرئيسية', 'وصف من نحن وصف من نحن  وصف من نحن  وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن   وصف من نحن', 'نص لافتة الصفحة الرئيسية نص لافتة الصفحة الرئيسية', NULL);
 
 -- --------------------------------------------------------
 
@@ -923,8 +934,8 @@ CREATE TABLE `why_choose_us` (
 --
 
 INSERT INTO `why_choose_us` (`id`, `image`, `created_at`, `updated_at`) VALUES
-(1, '7915174519536668059166b8c3d.svg', '2025-04-20 22:29:26', '2025-04-20 22:29:26'),
-(2, '2250174519554468059218954dd.svg', '2025-04-20 22:32:24', '2025-04-20 22:32:24');
+(1, '889917619306646904eda8586b1.jpg', '2025-04-20 22:29:26', '2025-10-31 15:11:04'),
+(2, '297717619306536904ed9da2802.jpg', '2025-04-20 22:32:24', '2025-10-31 15:10:53');
 
 -- --------------------------------------------------------
 
@@ -960,7 +971,8 @@ INSERT INTO `why_choose_us_translations` (`id`, `why_choose_us_id`, `title`, `te
 -- Indexes for table `appointments`
 --
 ALTER TABLE `appointments`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `appointments_branch_id_foreign` (`branch_id`);
 
 --
 -- Indexes for table `blogs`
@@ -1257,7 +1269,7 @@ ALTER TABLE `faq_translations`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `packages`
@@ -1358,6 +1370,12 @@ ALTER TABLE `why_choose_us_translations`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `appointments_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `blog_translations`
