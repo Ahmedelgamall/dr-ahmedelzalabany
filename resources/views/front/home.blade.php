@@ -106,7 +106,7 @@
                             <h2 class="title">{{ settings('about_us_title') }}</h2>
 
                         </div>
-                        <p>{{ settings('about_us_description') }}</p>
+                        <p>{!! settings('about_us_description') !!}</p>
 
                     </div>
                 </div>
