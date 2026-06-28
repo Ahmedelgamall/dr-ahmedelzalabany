@@ -46,8 +46,8 @@ class AppointmentsController extends Controller
                     return $query->type;
                 })
 
-                ->editColumn('branch', function ($query) {
-                    return $query->branch->name ?? '';
+                ->editColumn('service', function ($query) {
+                    return $query->service->title ?? '';
                 })
 
                 ->editColumn('date', function ($query) {

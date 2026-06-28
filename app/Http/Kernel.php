@@ -73,5 +73,6 @@ class Kernel extends HttpKernel
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'adminmw' => \App\Http\Middleware\AdminMdw::class,
         'cando'     =>\App\Http\Middleware\CanDo::class,
+        'cache-headers'     =>\App\Http\Middleware\CacheHeaders::class,
     ];
 }

@@ -47,8 +47,8 @@
                 },
 
                 {
-                    data: 'branch',
-                    name: 'branch',
+                    data: 'service',
+                    name: 'service',
                     orderable: false
                 },
 
@@ -111,7 +111,7 @@
                             <th>{{ getTranslatedWords('name') }}</th>
                             <th>{{ getTranslatedWords('phone') }}</th>
                             <th>{{ getTranslatedWords('radians type') }}</th>
-                            <th>{{ getTranslatedWords('branch') }}</th>
+                            <th>{{ getTranslatedWords('service') }}</th>
                             <th>{{ getTranslatedWords('appointment date') }}</th>
                             <th>{{ getTranslatedWords('sent date') }}</th>
                             <th>{{ getTranslatedWords('actions') }}</th>

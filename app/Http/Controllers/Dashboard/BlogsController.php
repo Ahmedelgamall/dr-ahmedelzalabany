@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Hash;
 use Str;
+use Illuminate\Support\Facades\Artisan;
 
 
 class BlogsController extends Controller
@@ -125,14 +126,15 @@ class BlogsController extends Controller
             'image' => 'required|image|max:2024',
             'language'=>'required',
             'title'=>'required',
-            'body'=>'required'
+            'body'=>'required',
+            'slug'=>'required'
         ]);
 
         /*validate_trans($request, [
             ['title', 'required'],
             ['body', 'required'],
         ]);*/
-        $data = $request->except(['image','title','body','meta_keywords','meta_description']);
+        $data = $request->except(['image','title','body','meta_keywords','meta_description','meta_title']);
         if ($request->image != '') {
             $image = upload_image($request, 'image', 1920, 1280, 'settings');
             $data['image'] = $image;
@@ -145,13 +147,15 @@ class BlogsController extends Controller
         $data['meta_keywords:en']=implode(',', $request->$english);*/
 
         $data['title:'.$request->language]=$request->title;
-        $data['slug:'.$request->language]=Str::slug($request->title);
+        $data['meta_title:'.$request->language]=$request->meta_title;
+        //$data['slug:'.$request->language]=Str::slug($request->title);
+        $data['slug:'.$request->language]=$request->slug ?? Str::slug($request->title);
         $data['body:'.$request->language]=$request->body;
         $data['meta_description:'.$request->language]=$request->meta_description;
         $data['meta_keywords:'.$request->language]=implode(',', $request->meta_keywords);
 
         $row = Blog::create($data);
-
+        Artisan::call('generate:site-map');
         return redirect()->to(route('blogs.index'))->with('success', getTranslatedWords('created successfully'));
 
     }
@@ -202,9 +206,10 @@ class BlogsController extends Controller
             'image' => 'nullable|image|max:2024',
             'language'=>'required',
             'title'=>'required',
-            'body'=>'required'
+            'body'=>'required',
+            'slug'=>'required'
         ]);
-        $data = $request->except(['image','title','body','meta_keywords','meta_description']);
+        $data = $request->except(['image','title','body','meta_keywords','meta_description','meta_title']);
         if ($request->image != '') {
             $image = upload_image($request, 'image', 1920, 1280, 'settings');
             $data['image'] = $image;
@@ -217,7 +222,9 @@ class BlogsController extends Controller
         $data['meta_keywords:en']=implode(',', $request->$english);*/
 
         $data['title:'.$request->language]=$request->title;
-        $data['slug:'.$request->language]=Str::slug($request->title);
+        $data['meta_title:'.$request->language]=$request->meta_title;
+        //$data['slug:'.$request->language]=Str::slug($request->title);
+        $data['slug:'.$request->language]=$request->slug ?? Str::slug($request->title);
         $data['body:'.$request->language]=$request->body;
         $data['meta_description:'.$request->language]=$request->meta_description;
         $data['meta_keywords:'.$request->language]=implode(',', $request->meta_keywords);
@@ -225,7 +232,7 @@ class BlogsController extends Controller
 
         $row = Blog::findOrFail($id);
         $row->update($data);
-
+        Artisan::call('generate:site-map');
         return redirect()->to(route('blogs.index'))->with('success', getTranslatedWords('edited successfully'));
     }
 

@@ -225,7 +225,8 @@ div.dataTables_wrapper div.dataTables_filter {
          auth()->user()->can('list testimonials') ||
          auth()->user()->can('list contracts') ||
          auth()->user()->can('list packages') ||
-         auth()->user()->can('list why choose us'))
+         auth()->user()->can('list why choose us')||
+         auth()->user()->can('list certificates'))
 <li class="menu-item @if (
     \Route::is('services.*') ||
         \Route::is('settings.*') ||
@@ -235,7 +236,8 @@ div.dataTables_wrapper div.dataTables_filter {
         \Route::is('testimonials.*') ||
         \Route::is('contracts.*') ||
         \Route::is('packages.*') ||
-        \Route::is('why-us.*')) open active @endif">
+        \Route::is('why-us.*')|| 
+        \Route::is('certificates.*')) open active @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons bx bx-cog"></i>
               <div data-i18n="Layouts">{{ getTranslatedWords('system settings') }}</div>
@@ -250,13 +252,13 @@ div.dataTables_wrapper div.dataTables_filter {
                                 </a>
         </li>
 @endcan
-    {{--  @can('list branches')
+     @can('list branches')
     <li class="menu-item">
           <a href="{{ route('branches.index') }}" class="menu-link">
             <div data-i18n="Without navbar">{{ getTranslatedWords('branches') }}</div>
           </a>
     </li>
-@endcan --}}
+@endcan 
    
 {{--  @can('list steps')
     <li class="menu-item">
@@ -279,13 +281,13 @@ div.dataTables_wrapper div.dataTables_filter {
       </a>
     </li>
 @endcan
-@can('list contracts')
+{{--  @can('list contracts')
     <li class="menu-item">
       <a href="{{ route('contracts.index') }}" class="menu-link">
         <div data-i18n="Without navbar">{{ getTranslatedWords('contracts') }}</div>
       </a>
     </li>
-@endcan
+@endcan --}}
 {{--  @can('list packages')
     <li class="menu-item">
       <a href="{{ route('packages.index') }}" class="menu-link">
@@ -300,6 +302,14 @@ div.dataTables_wrapper div.dataTables_filter {
       </a>
     </li>
 @endcan
+
+@can('list certificates')
+    <li class="menu-item">
+      <a href="{{ route('certificates.index') }}" class="menu-link">
+        <div data-i18n="Without navbar">{{ getTranslatedWords('doctor certificates') }}</div>
+      </a>
+    </li>
+@endcan
            @can('edit settings')
     <li class="menu-item">
                                 <a href="{{ route('settings.index') }}" class="menu-link">
@@ -307,7 +317,11 @@ div.dataTables_wrapper div.dataTables_filter {
                                 </a>
                               </li>
 @endcan
-
+<li class="menu-item">
+                                <a href="{{ route('calls-trackings') }}" class="menu-link">
+                                  <div data-i18n="Without navbar">{{ getTranslatedWords('calls trackings') }}</div>
+                                </a>
+                              </li> 
              
    
             </ul>

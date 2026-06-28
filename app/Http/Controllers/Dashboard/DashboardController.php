@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Hash;
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
-
+use Yajra\DataTables\Facades\DataTables;
+use App\Models\CallClick;
 
 class DashboardController extends Controller
 {
@@ -256,5 +257,54 @@ class DashboardController extends Controller
     {
         auth()->user()->unreadNotifications->markAsRead();
         return response()->json(['success' => getTranslatedWords('edited successfully')]);
+    }
+
+    public function call_trackings(Request $request){
+        if ($request->ajax()) {
+            //$query = CallClick::all();
+            $results = CallClick::query();
+            if ($request->from_date!='') {
+                $results->whereDate('created_at','>=',$request->from_date);
+            }
+
+            if ($request->to_date!='') {
+                $results->whereDate('created_at','<=',$request->to_date);
+            }
+            
+            
+            $query=$results->latest()->get();
+            return Datatables::of($query)
+                //->addIndexColumn()
+                ->editColumn('id', function ($query) {
+                    return $query->id;
+                })
+                ->editColumn('ip_address', function ($query) {
+                    return $query->ip_address;
+                })
+
+                
+
+                ->editColumn('country', function ($query) {
+                    return $query->country;
+                })
+
+                ->editColumn('city', function ($query) {
+                    return $query->city;
+                })
+
+                ->editColumn('whatsapp', function ($query) {
+                    return $query->is_whatsapp ? getTranslatedWords('whatsapp') : getTranslatedWords('calls');
+                })
+
+               
+
+                ->editColumn('date', function ($query) {
+                    return $query->created_at->format('Y-m-d');
+                })
+
+                ->make(true);
+        }
+
+        return view('dashboard.calls');
     }
 }

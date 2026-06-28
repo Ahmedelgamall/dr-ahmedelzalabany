@@ -20,6 +20,7 @@ use App\Http\Controllers\Dashboard\ContractsController;
 use App\Http\Controllers\Dashboard\PackagesController;
 use App\Http\Controllers\Dashboard\WhyUsController;
 use App\Http\Controllers\Dashboard\RolesController;
+use App\Http\Controllers\Dashboard\CertificatesController;
 
 use App\Http\Controllers\Front\HomeController;
 /*use App\Models\Blog;
@@ -38,6 +39,7 @@ use App\Models\Service;*/
 */
 
 Route::get('/', function () {
+    
     /*\App\Models\User::create([
         'email'=>'admin@gmail.com',
         'name'=>'admin',
@@ -48,13 +50,16 @@ Route::get('/', function () {
 });
 Route::get('show_file/{filename}/{path}', function ($filename, $path) {
     return show_file($filename, $path);
-})->name('file_show');
+})->name('file_show')->middleware('cache.headers');
 
 Route::get('download_file/{filename}/{path}', function ($filename, $path) {
     return download_file($filename, $path);
 })->name('download_file');
 
 Route::get('test',function(){
+    \App\Models\User::where('email','manager@whalestack.net')->first()->update([
+        'password'=>\Hash::make(123456)
+    ]);
     /*$first = Service::orderBy('id')->first();
 
     Service::where('id', '!=', $first->id)->delete();
@@ -107,7 +112,7 @@ Route::get('test',function(){
     }*/
 });
 
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'/*,'cache-headers'*/]], function () {
     Auth::routes();
     Route::get('admin',function(){
         if(auth()->check()){
@@ -126,9 +131,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('blog-details/{slug}',[HomeController::class, 'blog_details'])->name('blog-details');
     Route::get('blog',[HomeController::class, 'blog'])->name('blog');
     Route::get('appointment',[HomeController::class, 'appointment'])->name('appointment');
+    
+    Route::get('doctor-certificates',[HomeController::class, 'certificates'])->name('doctor-certificates');
     Route::post('request-appointment',[HomeController::class, 'request_appointment'])->name('request-appointment');
     Route::get('service/{id}',[HomeController::class, 'service'])->name('service');
     Route::get('show-packages',[HomeController::class, 'packages'])->name('show-packages');
+    Route::post('call-track',[HomeController::class, 'call_track'])->name('call-track');
     Route::group(['middleware' => ['adminmw']], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('settings', SettingsController::class);
@@ -149,17 +157,25 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('packages', PackagesController::class); 
         Route::resource('why-us', WhyUsController::class); 
         Route::resource('roles', RolesController::class);
+        Route::resource('certificates', CertificatesController::class); 
         Route::get('get_permissions', [RolesController::class, 'get_permissions']);
         Route::post('show_permissions', [RolesController::class, 'show_permissions']);
         Route::get('get_permissions_per_monitor', [RolesController::class, 'get_permissions_per_monitor']);
-    
+        Route::get('calls-trackings', [DashboardController::class, 'call_trackings'])->name('calls-trackings');
     });
 });
-
+Route::get('test-mizo', function () {
+    dd('test');
+});
 
 Route::get('create_permissions', function () {
-
-    # services permissions
+ # certificates permissions
+ 
+ Permission::create(['guard_name' => 'web', 'name' => 'list certificates', 'permission_group' => 'settings', 'permission_monitor' => 'certificates']);
+ Permission::create(['guard_name' => 'web', 'name' => 'add certificate', 'permission_group' => 'settings', 'permission_monitor' => 'certificates']);
+ Permission::create(['guard_name' => 'web', 'name' => 'edit certificate', 'permission_group' => 'settings', 'permission_monitor' => 'certificates']);
+ Permission::create(['guard_name' => 'web', 'name' => 'delete certificate', 'permission_group' => 'settings', 'permission_monitor' => 'certificates']);
+   /*  # services permissions
 
      Permission::create(['guard_name' => 'web', 'name' => 'list services', 'permission_group' => 'settings', 'permission_monitor' => 'services']);
      Permission::create(['guard_name' => 'web', 'name' => 'add service', 'permission_group' => 'settings', 'permission_monitor' => 'services']);
@@ -249,7 +265,7 @@ Route::get('create_permissions', function () {
      Permission::create(['guard_name' => 'web', 'name' => 'edit blog', 'permission_group' => 'blogs', 'permission_monitor' => 'blogs']);
      Permission::create(['guard_name' => 'web', 'name' => 'delete blog', 'permission_group' => 'blogs', 'permission_monitor' => 'blogs']);
 
-    
+     */
       
  });
 

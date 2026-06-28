@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
     {!! Twitter::generate() !!}
@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="{{ asset('website_assets/fonts/fontawesome/css/all.min.css') }}" />
     <!--====== Flaticon ======-->
     <link rel="stylesheet" href="{{ asset('website_assets/fonts/flaticon/css/flaticon.css') }}" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <!--====== Main Css ======-->
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}" />
 
@@ -52,25 +54,142 @@
             h5,
             h6,
             p,
-            {
-            font-family: "Amiri", serif;
+            .iconic-box .box-link-wrap .box-link {
+                font-family: "Amiri", serif !important;
+            }
+
+            :root {
+
+                --font-inter: "Amiri", serif !important;
+                --font-lora: "Amiri", serif !important;
+            }
+
+            @media (max-width: 1199px) {
+                .template-header .header-top-list-one .list-items .single-list-item {
+                    padding-left: 65px;
+                    margin-left: 65px;
+                    padding-right: 0;
+                    margin-right: 0;
+                }
+            }
+
+            .template-footer .footer-widgets .widget.text-widget .contact-list li i {
+
+                margin-right: 0;
+                margin-left: 12px;
+            }
+
+            .template-footer .footer-widgets .widget .opening-notice h6 i {
+                margin-left: 8px;
+                margin-right: 0;
             }
         </style>
     @endif
+    <style>
+        .template-header .site-menu ul li a .dd-trigger {
+            display: none
+        }
+
+        .mobile-slide-panel .mobile-menu li a {
+
+            padding: 10px 20px 10px 0;
+
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            height: 45px;
+            width: 45px;
+            display: block;
+            border-radius: 50%;
+            z-index: 99;
+            -webkit-transform: translateY(15px);
+            -ms-transform: translateY(15px);
+            transform: translateY(15px);
+            -webkit-transition: all 200ms linear;
+            -o-transition: all 200ms linear;
+            transition: all 200ms linear;
+            border: 1px solid #d7ae44;
+            font-size: 18px;
+            text-align: center;
+            line-height: 43px;
+        }
+
+        .whatsapp-float img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+            transition: transform .2s ease;
+        }
+
+        .whatsapp-float img:hover {
+            transform: scale(1.1);
+        }
+
+        .call-button {
+            position: fixed;
+            left: 17px;
+            bottom: 50px;
+            height: 46px;
+            width: 46px;
+            cursor: pointer;
+            display: block;
+            border-radius: 50px;
+            z-index: 10000;
+            opacity: 1;
+            visibility: hidden;
+            transform: translateY(15px);
+            -webkit-transition: all 200ms linear;
+            transition: all 200ms linear;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            right: auto;
+            border-color: transparent;
+        }
+    </style>
+    <meta name="google-site-verification" content="ltxyZjGxBROrICHKqi6KL12wx6JHQLFjY2FqusT1Yoo" />
+    
+    
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18107843419"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'AW-18107843419');
+    </script>
+    
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-594-785-9952');
+</script>
+    
+    
 </head>
 
 <body>
     <!--====== Start Preloader ======-->
-    <div id="preloader">
-        <div id="loading-center">
-            <div id="object"></div>
-        </div>
-    </div>
+    <!--<div id="preloader">-->
+    <!--    <div id="loading-center">-->
+    <!--        <div id="object"></div>-->
+    <!--    </div>-->
+    <!--</div>-->
     <!--====== End Preloader ======-->
 
     <!--====== Start Template Header ======-->
     <header class="template-header header-three">
-        <div class="header-top-list-one d-none d-lg-block">
+        {{-- <div class="header-top-list-one d-none d-lg-block">
             <div class="container">
                 <div class="list-items">
                     <div class="single-list-item">
@@ -105,13 +224,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="container">
             <div class="header-navigation">
                 <div class="header-left">
-                    <div class="site-logo d-lg-none">
+                    <div class="site-logo">
                         <a href="{{ route('home') }}">
-                            <img src="{{ route('file_show', [settings('logo'), 'settings']) }}"
+                            <img height="51" src="{{ route('file_show', [settings('logo'), 'settings']) }}"
                                 alt="{{ settings('system_name') }}">
                         </a>
                     </div>
@@ -125,12 +244,44 @@
                                     href="{{ route('contact-us') }}">{{ getTranslatedWords('contact us') }}</a></li>
                             <li @if (\Route::is('services')) class="active" @endif><a
                                     href="{{ route('services') }}">{{ getTranslatedWords('services') }}</a></li>
-                            <li @if (\Route::is('contractsFront')) class="active" @endif><a
+                            {{--  <li @if (\Route::is('contractsFront')) class="active" @endif><a
                                     href="{{ route('contractsFront') }}">{{ getTranslatedWords('contracts') }}</a>
-                            </li>
+                            </li> --}}
+
                             <li @if (\Route::is('blog')) class="active" @endif><a
                                     href="{{ route('blog') }}">{{ getTranslatedWords('blog') }}</a></li>
-
+                            <li @if (\Route::is('doctor-certificates')) class="active" @endif><a
+                                    href="{{ route('doctor-certificates') }}">{{ getTranslatedWords('doctor certificates') }}</a>
+                            </li>
+                            <li><a href="{{ settings('facebook_link') }}"
+                                    style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 9px;"
+                                    class="btn btn-primary text-white">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="{{ settings('twitter_link') }}"
+                                    style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 7px;"
+                                    class="btn btn-primary text-white">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="{{ settings('youtube_link') }}"
+                                    style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 7px;"
+                                    class="btn btn-primary text-white">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="https://wa.me/{{ settings('phone') }}"
+                                    style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 7px;"
+                                    class="btn btn-primary text-white">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -180,7 +331,7 @@
                         </li>
                         <li>
                             <i class="far fa-phone"></i>
-                            <a href="tel:{{ settings('phone') }}">{{ settings('phone') }}</a><br>
+                            <a href="tel:{{ settings('phone_2') }}" class="call-track">{{ settings('phone_2') }}</a><br>
 
                         </li>
                     </ul>
@@ -211,10 +362,43 @@
                                 href="{{ route('contact-us') }}">{{ getTranslatedWords('contact us') }}</a></li>
                         <li @if (\Route::is('services')) class="active" @endif><a
                                 href="{{ route('services') }}">{{ getTranslatedWords('services') }}</a></li>
-                        <li @if (\Route::is('services')) class="active" @endif><a
-                                href="{{ route('contractsFront') }}">{{ getTranslatedWords('contracts') }}</a></li>
+                        {{--  <li @if (\Route::is('services')) class="active" @endif><a
+                                href="{{ route('contractsFront') }}">{{ getTranslatedWords('contracts') }}</a></li> --}}
                         <li @if (\Route::is('blog')) class="active" @endif><a
                                 href="{{ route('blog') }}">{{ getTranslatedWords('blog') }}</a></li>
+                        <li @if (\Route::is('doctor-certificates')) class="active" @endif><a
+                                href="{{ route('doctor-certificates') }}">{{ getTranslatedWords('doctor certificates') }}</a>
+                        </li>
+
+                        <li><a href="{{ settings('facebook_link') }}"
+                                style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 9px;    margin-top: 15px;"
+                                class="btn btn-primary text-white">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="{{ settings('twitter_link') }}"
+                                style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 7px;    margin-top: 15px;"
+                                class="btn btn-primary text-white">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="{{ settings('youtube_link') }}"
+                                style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 7px;    margin-top: 15px;"
+                                class="btn btn-primary text-white">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://wa.me/{{ settings('phone') }}"
+                                style="background-color: var(--color-secondary);    font-size: 14px;
+    display: inline-block;
+    padding: 5px 7px;    margin-top: 15px;"
+                                class="btn btn-primary text-white">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <a href="#" class="panel-close">
@@ -233,6 +417,16 @@
         <i class="far fa-angle-up"></i>
     </a>
     <!--====== Back to Top End ======-->
+
+    <a href="https://wa.me/{{ settings('phone') }}" target="_blank" class="whatsapp-float call-track-whatsapp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <a href="tel:{{ settings('phone_2') }}" class="call-button call-track">
+
+        <i class="far fa-phone"></i>
+    </a>
+
 
     <!--====== Start Template Footer ======-->
     <footer class="template-footer bg-color-grey template-footer-white have-cta-boxes-two">
@@ -290,8 +484,8 @@
                                                 class="far fa-envelope"></i>{{ settings('email') }}</a>
                                     </li>
                                     <li>
-                                        <a href="tel:{{ settings('phone') }}"><i
-                                                class="far fa-phone"></i>{{ settings('phone') }}</a>
+                                        <a href="tel:{{ settings('phone_2') }}" class="call-track"><i
+                                                class="far fa-phone"></i>{{ settings('phone_2') }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -331,9 +525,9 @@
                                                 <li><a
                                                         href="{{ route('services') }}">{{ getTranslatedWords('services') }}</a>
                                                 </li>
-                                                <li><a
+                                                {{--  <li><a
                                                         href="{{ route('contractsFront') }}">{{ getTranslatedWords('contracts') }}</a>
-                                                </li>
+                                                </li> --}}
                                                 <li><a
                                                         href="{{ route('blog') }}">{{ getTranslatedWords('blog') }}</a>
                                                 </li>
@@ -345,7 +539,7 @@
                         </div>
                         <div class="col-lg-3 col-md-10">
                             <div class="widget newsletters-widget">
-                               
+
 
                                 <div class="opening-notice">
                                     <h6><i class="far fa-clock"></i>{{ getTranslatedWords('Opening Hours') }}</h6>
@@ -356,8 +550,9 @@
                     </div>
                 </div>
                 <div class="copyright-area">
-                    
-                    <p>© {{ date('Y') }} <a target="_blank" href="https://whalestack.net/">made by Whale stack.</a>. All right reserved</p>
+
+                    <p>© {{ date('Y') }} <a target="_blank" href="https://whalestack.net/">made by Whale
+                            stack.</a>. All right reserved</p>
                 </div>
             </div>
         </div>
@@ -382,8 +577,68 @@
     <script src="{{ asset('website_assets/js/magnific-popup.min.js') }}"></script>
     <!--====== WOW Js ======-->
     <script src="{{ asset('website_assets/js/wow.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!--====== Main JS ======-->
     <script src="{{ asset('website_assets/js/main.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    toastr['error']("{{ $error }}")
+                @endforeach
+            @endif
+            @if (session()->has('success'))
+                toastr['success']("{{ session()->get('success') }}")
+            @elseif (session()->has('error'))
+                toastr['error']("{{ session()->get('error') }}")
+            @endif
+
+
+            $('.take_time li').on('click', function() {
+                $('.time').val($(this).attr('data-value'));
+            })
+            $('.take_branch li').on('click', function() {
+                $('.branch_id').val($(this).attr('data-value'));
+            })
+
+
+
+
+        });
+
+        $(document).on('click', '.call-track', function() {
+            $.ajax({
+                url: "{{ route('call-track') }}",
+                type: "POST",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function(response) {
+                    //console.log(response);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
+
+        $(document).on('click', '.call-track-whatsapp', function() {
+            $.ajax({
+                url: "{{ route('call-track') }}",
+                type: "POST",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    whatsapp: true,
+                },
+                success: function(response) {
+                    //console.log(response);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
+    </script>
 </body>
 
 </html>

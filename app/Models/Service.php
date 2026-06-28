@@ -12,7 +12,11 @@ class Service extends Model implements TranslatableContract {
     use Translatable;
     protected $guarded = [];
 
+    protected $casts = [
+        'faqs' => 'array',
+    ];
+
     public $translatedAttributes = [
-        'title','description'
+        'title','description','meta_description','meta_title','short_description'
     ];
 }

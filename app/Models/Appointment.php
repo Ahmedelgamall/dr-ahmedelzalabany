@@ -12,4 +12,8 @@ class Appointment extends Model
     public function branch(){
         return $this->belongsTo(Branch::class);
     }
+
+    public function service(){
+        return $this->belongsTo(Service::class);
+    }
 }

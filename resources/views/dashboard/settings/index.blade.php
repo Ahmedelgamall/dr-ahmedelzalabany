@@ -69,11 +69,20 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="email" class="form-label">{{ getTranslatedWords('phone') }}</label>
-                                    <input type="phone" value="{{ $setting->phone }}" class="form-control" name="phone"
-                                        placeholder="{{ getTranslatedWords('phone') }}">
+                                    <label for="email" class="form-label">{{ getTranslatedWords('whatsapp') }}</label>
+                                    <input type="tel" value="{{ $setting->phone }}" class="form-control" name="phone"
+                                        placeholder="{{ getTranslatedWords('whatsapp') }}">
                                     @error('phone')
                                         <div class="text-danger">{{ $errors->first('phone') }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label for="email" class="form-label">{{ getTranslatedWords('phone') }}</label>
+                                    <input type="tel" value="{{ $setting->phone_2 }}" class="form-control"
+                                        name="phone_2" placeholder="{{ getTranslatedWords('phone') }}">
+                                    @error('phone_2')
+                                        <div class="text-danger">{{ $errors->first('phone_2') }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
@@ -141,34 +150,37 @@
                                     @enderror
                                 </div>
 
-                                
 
-                                {{--  <div class="mb-3 col-md-6">
-                                    <label for="email" class="form-label">{{ getTranslatedWords('facebook link') }}</label>
-                                    <input type="url" value="{{ $setting->facebook_link }}" class="form-control" name="facebook_link"
-                                        placeholder="{{ getTranslatedWords('facebook link') }}">
+
+                                <div class="mb-3 col-md-6">
+                                    <label for="email"
+                                        class="form-label">{{ getTranslatedWords('facebook link') }}</label>
+                                    <input type="url" value="{{ $setting->facebook_link }}" class="form-control"
+                                        name="facebook_link" placeholder="{{ getTranslatedWords('facebook link') }}">
                                     @error('facebook_link')
                                         <div class="text-danger">{{ $errors->first('facebook_link') }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="email" class="form-label">{{ getTranslatedWords('twitter link') }}</label>
-                                    <input type="url" value="{{ $setting->twitter_link }}" class="form-control" name="twitter_link"
-                                        placeholder="{{ getTranslatedWords('twitter link') }}">
+                                    <label for="email"
+                                        class="form-label">{{ getTranslatedWords('instagram link') }}</label>
+                                    <input type="url" value="{{ $setting->twitter_link }}" class="form-control"
+                                        name="twitter_link" placeholder="{{ getTranslatedWords('instagram link') }}">
                                     @error('twitter_link')
                                         <div class="text-danger">{{ $errors->first('twitter_link') }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="email" class="form-label">{{ getTranslatedWords('youtube link') }}</label>
-                                    <input type="url" value="{{ $setting->youtube_link }}" class="form-control" name="youtube_link"
-                                        placeholder="{{ getTranslatedWords('youtube link') }}">
+                                    <label for="email"
+                                        class="form-label">{{ getTranslatedWords('youtube link') }}</label>
+                                    <input type="url" value="{{ $setting->youtube_link }}" class="form-control"
+                                        name="youtube_link" placeholder="{{ getTranslatedWords('youtube link') }}">
                                     @error('youtube_link')
                                         <div class="text-danger">{{ $errors->first('youtube_link') }}</div>
                                     @enderror
-                                </div>--}}
+                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     @component('components.input_trans', [
@@ -247,7 +259,7 @@
                                         <img class="img-fluid"
                                             src="{{ route('file_show', ['filename' => $setting->steps_image, 'path' => 'settings']) }}" /><br>
                                     @endif
-                                    {{ getTranslatedWords('services home page middle image') }}  497 x 600
+                                    {{ getTranslatedWords('services home page middle image') }} 497 x 600
                                     <div class="custom-file">
                                         <input type="file" name="steps_image" class="custom-file-input"
                                             id="validatedCustomFile">
@@ -303,11 +315,13 @@
                                         'label' => getTranslatedWords('about us description'),
                                         'required' => 'false',
                                         'model' => $setting,
-                                        'class'=>'ckeditor'
+                                        'class' => 'ckeditor',
                                     ])
                                         about_us_description
                                     @endcomponent
                                 </div>
+
+
 
                                 <div class="mb-3 col-md-12">
                                     @component('components.input_trans', [
@@ -318,6 +332,29 @@
                                     ])
                                         meta_description
                                     @endcomponent
+                                </div>
+
+                                <div class="mb-3 col-md-12">
+                                    @component('components.input_trans', [
+                                        'type' => 'text',
+                                        'label' => getTranslatedWords('meta title'),
+                                        'required' => 'false',
+                                        'model' => $setting,
+                                    ])
+                                        meta_title
+                                    @endcomponent
+                                </div>
+
+                                <div class="mb-3 col-md-12">
+                                    @component('components.input_trans', [
+                                        'type' => 'text',
+                                        'label' => getTranslatedWords('doctor history'),
+                                        'required' => 'false',
+                                        'model' => $setting,
+                                    ])
+                                        doctor_history
+                                    @endcomponent
+
                                 </div>
 
                                 <div class="mb-3 col-md-6">
@@ -364,7 +401,19 @@
                                     @enderror
                                 </div>
 
-                                
+                                <div class="mb-3 col-md-12">
+                                    @component('components.input_trans', [
+                                        'type' => 'textarea',
+                                        'label' => getTranslatedWords('doctor biography'),
+                                        'required' => 'false',
+                                        'model' => $setting,
+                                        'class' => 'ckeditor',
+                                    ])
+                                        doctor_bio
+                                    @endcomponent
+                                </div>
+
+
 
                             </div>
                             <div class="mt-2">

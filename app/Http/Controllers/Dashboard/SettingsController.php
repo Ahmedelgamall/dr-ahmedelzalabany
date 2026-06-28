@@ -96,7 +96,8 @@ class SettingsController extends Controller
         $setting = Setting::first();
         
         if ($request->has('logo')) {
-            $image = upload_image($request, 'logo', 170, 107, 'settings');
+            //$image = upload_image($request, 'logo', 170, 107, 'settings');
+            $image = upload_image($request, 'logo', null, null, 'settings');
             $data['logo'] = $image;
         }
 

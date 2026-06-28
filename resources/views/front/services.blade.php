@@ -25,7 +25,7 @@
                             </div>
                             <h4 class="title"><a href="{{ route('service', $s->id) }}">{{ $s->title }}</a></h4>
                             <p>
-                                {{ $s->description }}
+                               {{ Illuminate\Support\Str::words($s->short_description,20,'...') }}
                             </p>
 
                             <div class="box-link-wrap">

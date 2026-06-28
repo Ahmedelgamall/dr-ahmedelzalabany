@@ -34,18 +34,20 @@
                     @csrf
                     <div class="row">
                         <div class="col-sm-6">
+                            <label for="date" class="text-white">{{ getTranslatedWords('patient name') }}</label>
                             <div class="input-field">
                                 <input type="text" name="name" value='{{ old('name') }}'
                                     placeholder="{{ getTranslatedWords('patient name') }}">
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <label for="date" class="text-white">{{ getTranslatedWords('phone') }}</label>
                             <div class="input-field">
                                 <input type="text" name="phone" value='{{ old('phone') }}'
                                     placeholder="{{ getTranslatedWords('phone') }}">
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                       {{--  <div class="col-sm-6">
                             <div class="input-field">
                                 <select name="time">
 
@@ -57,26 +59,29 @@
                                     <option value="evening">{{ getTranslatedWords('evening') }}</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
+                        </div> --}}
+                        {{-- <div class="col-sm-6">
+                            <label for="date" class="text-white">{{ getTranslatedWords('service') }}</label>
                             <div class="input-field">
-                                <select name="branch_id">
-
+                                <select name="service_id">
+                                   
                                     <option value="">{{ getTranslatedWords('select') }}
-                                        {{ getTranslatedWords('branch') }}</option>
-                                    @foreach (App\Models\Branch::get() as $b)
-                                        <option value="{{ $b->id }}">{{ $b->name }}</option>
+                                        {{ getTranslatedWords('service') }}</option>
+                                    @foreach (App\Models\Service::get() as $b)
+                                        <option value="{{ $b->id }}">{{ $b->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <label for="date" class="text-white">{{ getTranslatedWords('date') }}</label>
                             <div class="input-field">
                                 <input type="date" name="date" value='{{ old('date') }}'
                                     placeholder="{{ getTranslatedWords('date') }}">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-12">
+                            <label for="date" class="text-white">{{ getTranslatedWords('notes') }}</label>
                             <div class="input-field">
                                 <textarea rows="5" name="notes" placeholder="{{ getTranslatedWords('notes') }}">{{ old('notes') }}</textarea>
                             </div>
@@ -106,8 +111,10 @@
                             <h2 class="title">{{ settings('about_us_title') }}</h2>
 
                         </div>
-                        <p>{!! settings('about_us_description') !!}</p>
-
+                        <p>{!!\Illuminate\Support\Str::words(settings('about_us_description'),25,'....') !!}</p>
+                        <a href="{{ route('about-us') }}"
+                                    class="template-btn">{{ getTranslatedWords('learn more') }}<i
+                                        class="far fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-10">
@@ -123,8 +130,44 @@
         </div>
     </section>
 
+    <section class="service-section bg-color-grey section-gap">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-heading text-center mb-40">
+                        <span class="tagline">{{ getTranslatedWords('Popular Dental Services') }}</span>
+                        <h2 class="title">{{ getTranslatedWords('Benefit FOr Physical Mental and Virtual Care') }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center service-loop">
 
-    <section class="service-section bg-color-primary section-gap-top">
+            @foreach (App\Models\Service::take(6)->get() as $s)
+                <div class="col-lg-4 col-md-6 col-sm-8">
+                    <div class="iconic-box mt-30 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="icon">
+                            <img src="{{ route('file_show', [$s->image, 'settings']) }}" alt="Icon">
+                        </div>
+                        <h4 class="title"><a href="{{ route('service', $s->id) }}">{{$s->title}}</a></h4>
+                        <p>
+                            {!! Illuminate\Support\Str::words($s->description,10,'...') !!}
+                        </p>
+
+                        <div class="box-link-wrap">
+                            <span class="link-icon"><i class="far fa-plus"></i></span>
+                            <a class="box-link" href="{{ route('service', $s->id) }}">{{getTranslatedWords('Read More')}} <i class="far fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+                
+                
+            </div>
+        </div>
+    </section>
+
+
+    <!-- <section class="service-section bg-color-primary section-gap-top">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-10">
@@ -174,7 +217,7 @@
                     class="border-image">
             </div>
         </div>
-    </section>
+    </section> -->
     <!--====== Service Section End ======-->
 
     <section class="latest-blog-section section-gap">
@@ -219,85 +262,120 @@
         </div>
     </section>
 
-    <section class="gallery-section section-gap-top">
-        <div class="container-fluid fluid-70">
-            <div class="section-heading text-center mb-40">
-                <span class="tagline">{{ getTranslatedWords('contracts') }}</span>
-                <h2 class="title">{{ getTranslatedWords('our success partners') }}</h2>
-            </div>
-            <div class="row gallery-loop justify-content-center">
-                @foreach (App\Models\Contract::get() as $c)
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <div class="gallery-item-one mt-30">
-                            <div class="gallery-thumbnail">
-                                <img src="{{ route('file_show', [$c->image, 'settings']) }}" alt="Image">
+    <section class="faq-section section-gap">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="faq-page-content">
+                        <h3 class="faq-title">{{getTranslatedWords('Frequently Asked Questions')}}</h3>
+                        {{-- <p class="mb-35">
+                            Amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                        </p> --}}
+                        <div class="accordion" id="accordionFaq">
+                            @foreach (App\Models\Faq::get() as $f)
+                                <div class="accordion-item @if($loop->first) active-accordion @endif">
+                                <div class="accordion-header">
+                                    <h6 data-toggle="collapse" aria-expanded="true" data-target="#itemTwo{{$f->id}}">
+                                        <span>{{$f->question}}</span>
+                                    </h6>
+                                </div>
+                                <div class="collapse @if($loop->first) show @endif" id="itemTwo{{$f->id}}" data-parent="#accordionFaq">
+                                    <div class="accordion-content">
+                                        <p>
+                                           {{$f->answer}}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-
+                            @endforeach
+                            
+                            
                         </div>
                     </div>
-                @endforeach
-
-
+                </div>
             </div>
         </div>
     </section>
 
-    <div class="doctors-with-testimonial">
+    <!--<section class="gallery-section section-gap-top">-->
+    <!--    <div class="container-fluid fluid-70">-->
+    <!--        <div class="section-heading text-center mb-40">-->
+    <!--            <span class="tagline">{{ getTranslatedWords('contracts') }}</span>-->
+    <!--            <h2 class="title">{{ getTranslatedWords('our success partners') }}</h2>-->
+    <!--        </div>-->
+    <!--        <div class="row gallery-loop justify-content-center">-->
+    <!--            @foreach (App\Models\Contract::get() as $c)-->
+    <!--                <div class="col-xl-3 col-lg-4 col-sm-6">-->
+    <!--                    <div class="gallery-item-one mt-30">-->
+    <!--                        <div class="gallery-thumbnail">-->
+    <!--                            <img src="{{ route('file_show', [$c->image, 'settings']) }}" alt="Image">-->
+    <!--                        </div>-->
+
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            @endforeach-->
+
+
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</section>-->
+
+    <!--<div class="doctors-with-testimonial">-->
 
         <!--====== Testimonial Section Start ======-->
-        <section class="testimonial-section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="section-heading text-center mb-40">
-                            <span class="tagline">{{ getTranslatedWords('Our Testimonial') }}</span>
-                            <h2 class="title">{{ getTranslatedWords('What our Patients Say About Our Medical') }}</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-start">
-                    <div class="col-xl-8 col-lg-9">
-                        <div class="row justify-content-center">
-                            @foreach (App\Models\Testimonial::get() as $t)
-                                <div class="col-md-6 col-sm-10">
-                                    <div class="testimonial-box mt-30 wow fadeInUp" data-wow-delay="0.3s">
-                                        <div class="author-info-wrapper">
-                                            <div class="avatar">
-                                                <img src="{{ route('file_show', [$t->image, 'settings']) }}" alt="Images">
-                                            </div>
-                                            <div class="author-info">
-                                                <h5 class="name">{{ $t->name }}</h5>
-                                                <span class="title">{{ $t->title }}</span>
-                                                <ul class="rating">
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star-half-alt"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <p class="content">
-                                            {{ $t->opinion }}
-                                        </p>
-                                        <span class="quote-icon">
-                                            <img src="{{ asset('website_assets/img/icon/right-quote.png') }}" alt="Quote">
-                                        </span>
-                                    </div>
-                                </div>
-                            @endforeach
+    <!--    <section class="testimonial-section">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row justify-content-center">-->
+    <!--                <div class="col-lg-6">-->
+    <!--                    <div class="section-heading text-center mb-40">-->
+    <!--                        <span class="tagline">{{ getTranslatedWords('Our Testimonial') }}</span>-->
+    <!--                        <h2 class="title">{{ getTranslatedWords('What our Patients Say About Our Medical') }}</h2>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="row justify-content-start">-->
+    <!--                <div class="col-xl-8 col-lg-9">-->
+    <!--                    <div class="row justify-content-center">-->
+    <!--                        @foreach (App\Models\Testimonial::get() as $t)-->
+    <!--                            <div class="col-md-6 col-sm-10">-->
+    <!--                                <div class="testimonial-box mt-30 wow fadeInUp" data-wow-delay="0.3s">-->
+    <!--                                    <div class="author-info-wrapper">-->
+    <!--                                        <div class="avatar">-->
+    <!--                                            <img src="{{ route('file_show', [$t->image, 'settings']) }}" alt="Images">-->
+    <!--                                        </div>-->
+    <!--                                        <div class="author-info">-->
+    <!--                                            <h5 class="name">{{ $t->name }}</h5>-->
+    <!--                                            <span class="title">{{ $t->title }}</span>-->
+    <!--                                            <ul class="rating">-->
+    <!--                                                <li><i class="fas fa-star"></i></li>-->
+    <!--                                                <li><i class="fas fa-star"></i></li>-->
+    <!--                                                <li><i class="fas fa-star"></i></li>-->
+    <!--                                                <li><i class="fas fa-star"></i></li>-->
+    <!--                                                <li><i class="fas fa-star-half-alt"></i></li>-->
+    <!--                                            </ul>-->
+    <!--                                        </div>-->
+    <!--                                    </div>-->
+    <!--                                    <p class="content">-->
+    <!--                                        {{ $t->opinion }}-->
+    <!--                                    </p>-->
+    <!--                                    <span class="quote-icon">-->
+    <!--                                        <img src="{{ asset('website_assets/img/icon/right-quote.png') }}" alt="Quote">-->
+    <!--                                    </span>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        @endforeach-->
 
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
         <!--====== Testimonial Section End ======-->
 
-        <div class="section-image">
-            <img src="{{ route('file_show', [settings('contact_image'), 'settings']) }}" alt="Image">
-        </div>
+        <!--<div class="section-image">-->
+        <!--    <img src="{{ route('file_show', [settings('contact_image'), 'settings']) }}" alt="Image">-->
+        <!--</div>-->
     </div>
 
 

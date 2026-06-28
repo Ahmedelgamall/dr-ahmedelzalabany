@@ -21,7 +21,8 @@ use Artesaos\SEOTools\Facades\TwitterCard;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
-
+use App\Models\CallClick;
+use Illuminate\Support\Facades\Http;
 //use Socialite;
 
 
@@ -41,93 +42,85 @@ class HomeController extends Controller
     }
     public function home()
     {
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('home'));
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('home'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('home'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('home'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('home'));
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         JsonLd::setDescription(settings('meta_description'));
-        
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('home'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         SEOTools::setDescription(settings('meta_description'));
-       
+
         return view('front.home');
     }
 
     public function about()
     {
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('about us'));
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('about us'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('about us'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('about us'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('about us'));
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         JsonLd::setDescription(settings('meta_description'));
-        
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('about us'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         SEOTools::setDescription(settings('meta_description'));
         return view('front.about');
     }
 
     public function contracts()
     {
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('contracts'));
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('contracts'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('contracts'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('contracts'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('contracts'));
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         JsonLd::setDescription(settings('meta_description'));
-        
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('contracts'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         SEOTools::setDescription(settings('meta_description'));
         return view('front.contracts');
     }
 
     public function services()
     {
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('services'));
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('services'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('services'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('services'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('services'));
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         JsonLd::setDescription(settings('meta_description'));
-        
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('services'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         SEOTools::setDescription(settings('meta_description'));
         return view('front.services');
     }
@@ -137,23 +130,25 @@ class HomeController extends Controller
     {
         $service=Service::findOrFail($id);
         SEOMeta::setTitle(settings('system_name').' - '.$service->title);
-        SEOMeta::setDescription(settings('meta_description'));
+        
+        SEOMeta::setDescription($service->meta_description);
        
-        OpenGraph::setTitle(settings('system_name').' - '.$service->title);
+        OpenGraph::setTitle(settings('system_name').' - '.$service->meta_title);
        
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.$service->title);
+        TwitterCard::setTitle(settings('system_name').' - '.$service->meta_title);
         
 
-        JsonLd::setTitle(settings('system_name').' - '.$service->title);
+        JsonLd::setTitle(settings('system_name').' - '.$service->meta_title);
         JsonLd::setDescription(Str::words($service->description,50));
         
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.$service->title);
-        SEOTools::setDescription(Str::words($service->description,50));
+        SEOTools::setTitle(settings('system_name').' - '.$service->meta_title);
+        //SEOTools::setDescription(Str::words($service->description,50));
+        SEOTools::setDescription($service->meta_description);
         return view('front.service',compact('service'));
     }
 
@@ -161,101 +156,101 @@ class HomeController extends Controller
 
     public function blog(Request $request)
     {
-        if($request->search!=''){
-            $posts = Blog::where('language',app()->getLocale())->where('title','like','%'.$request->search.'%')->latest()->paginate(15);
-            //$posts=Blog::whereTranslationLike('title','%'.$request->search.'%')->latest()->paginate(15);
+        if ($request->search != '') {
+            $posts = Blog::where('language', app()->getLocale())->where('title', 'like', '%' . $request->search . '%')->latest()->paginate(15);
+        } else {
+            $posts = Blog::where('language', app()->getLocale())->latest()->paginate(15);
         }
-        else {
-            $posts=Blog::where('language',app()->getLocale())->latest()->paginate(15);
-        }
-        
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('blog'));
+
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('blog'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('blog'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('blog'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('blog'));
-        JsonLd::setDescription(settings('system_name').' '.getTranslatedWords('blog'));
-        
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+        JsonLd::setDescription(settings('system_name') . ' ' . settings('meta_description'));
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('blog'));
-        SEOTools::setDescription(settings('system_name').' '.getTranslatedWords('blog'));
-        return view('front.posts',compact('posts'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+        SEOTools::setDescription(settings('system_name') . ' ' . settings('meta_description'));
+        return view('front.posts', compact('posts'));
     }
 
     public function blog_details($slug)
     {
-        $post=Blog::whereTranslation('slug',$slug)->firstOrFail();
+        $post=Blog::where('language',app()->getLocale())->whereHas('translations',function($q) use ($slug){
+            $q->where('slug',$slug)
+              ->where('locale',app()->getLocale());
+        })->first();
+        if(!$post){
+            return redirect()->to(route('home'))->with(['error' => getTranslatedWords('invalid link')]);
+        }
+        //dd($post);
+        //$post = Blog::whereTranslation('slug', $slug)->firstOrFail();
+        SEOMeta::setTitle(settings('system_name') . ' - ' . $post->title);
         SEOMeta::setTitle(settings('system_name').' - '.$post->title);
         SEOMeta::setDescription($post->meta_description);
         SEOMeta::addMeta('keywords',$post->meta_keywords);
        
-        OpenGraph::setTitle(settings('system_name').' - '.$post->title);
+        OpenGraph::setTitle(settings('system_name').' - '.$post->meta_title);
        
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.$post->title);
+        TwitterCard::setTitle(settings('system_name').' - '.$post->meta_title);
         
 
-        JsonLd::setTitle(settings('system_name').' - '.$post->title);
+        JsonLd::setTitle(settings('system_name').' - '.$post->meta_title);
         JsonLd::setDescription($post->meta_description);
         
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.$post->title);
+        SEOTools::setTitle(settings('system_name').' - '.$post->meta_title);
         SEOTools::setDescription($post->meta_description);
         return view('front.post',compact('post'));
     }
 
     public function appointment()
     {
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('request appointment'));
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('request appointment'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('request appointment'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('request appointment'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('request appointment'));
+        JsonLd::setTitle(settings('system_name') . ' - ' .settings('meta_title'));
         JsonLd::setDescription(settings('meta_description'));
-        
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('request appointment'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         SEOTools::setDescription(settings('meta_description'));
         return view('front.appointment');
     }
 
     public function packages()
     {
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('packages'));
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('packages'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('packages'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('packages'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('packages'));
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         JsonLd::setDescription(settings('meta_description'));
-        
 
-
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('packages'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . getTranslatedWords('packages'));
         SEOTools::setDescription(settings('meta_description'));
         return view('front.packages');
     }
@@ -271,10 +266,10 @@ class HomeController extends Controller
         $request->validate([
             'name' => 'required',
             'phone' => 'required|numeric',
-            'date' => 'required|date',
-            'radians_type' => 'required',
-            'time' => 'required',
-            'branch_id'=>'required'
+            //'date' => 'required|date',
+            //'radians_type' => 'required',
+            //'time' => 'required',
+            //'service_id'=>'required'
         ]);		
 
         //dd(Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d'));
@@ -282,11 +277,12 @@ class HomeController extends Controller
         $appointment=Appointment::create([
             'name'=>$request->name,
             'phone'=>$request->phone,
-            'type'=>$request->radians_type,
-            'date'=>Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d'),
-            'time'=>$request->time,
+            //'type'=>$request->radians_type,
+            //'date'=>$request->date,
+            //'date'=>Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d'),
+            //'time'=>$request->time,
             'notes'=>$request->notes,
-            'branch_id'=>$request->branch_id
+            //'service_id'=>$request->service_id
         ]);
 
         return redirect()->back()->with(['success' => getTranslatedWords('your request sent successfuly we will be in contact with you as soon as possible to confirm your appointment')]);
@@ -299,23 +295,21 @@ class HomeController extends Controller
 
     public function contact()
     {
-        SEOMeta::setTitle(settings('system_name').' - '.getTranslatedWords('contact us'));
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('contact us'));
         SEOMeta::setDescription(settings('meta_description'));
-       
-        OpenGraph::setTitle(settings('system_name').' - '.getTranslatedWords('contact us'));
-       
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
         //OpenGraph::addProperty('type', 'articles');
 
-        TwitterCard::setTitle(settings('system_name').' - '.getTranslatedWords('contact us'));
-        
+        TwitterCard::setTitle(settings('system_name') . ' - ' . getTranslatedWords('contact us'));
 
-        JsonLd::setTitle(settings('system_name').' - '.getTranslatedWords('contact us'));
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         JsonLd::setDescription(settings('meta_description'));
-        
 
         // OR
 
-        SEOTools::setTitle(settings('system_name').' - '.getTranslatedWords('contact us'));
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
         SEOTools::setDescription(settings('meta_description'));
         return view('front.contact');
     }
@@ -352,6 +346,50 @@ class HomeController extends Controller
     }
     
     
-    
+    public function call_track(Request $request){
+        $ip = request()->ip(); // user IP
+        $response = Http::get("http://ip-api.com/json/{$ip}");
 
+        if ($response->successful()) {
+            $data = $response->json();
+            CallClick::create([
+                'ip_address'=>$ip,
+                'country'=>$data['country'] ?? null,
+                'city'=>$data['city'] ?? null,
+                'is_whatsapp'=>isset($request->whatsapp) ? 1 : 0
+            ]);
+            
+        }
+        /* $location = geoip($ip);
+        
+        $city = $location->city;
+        $country = $location->country;
+
+        CallClick::create([
+            'ip'=>$ip,
+            'country'=>$country,
+            'city'=>$city
+        ]); */
+    }
+
+    public function certificates()
+    {
+        SEOMeta::setTitle(settings('system_name') . ' - ' . getTranslatedWords('doctor certificates'));
+        SEOMeta::setDescription(settings('meta_description'));
+
+        OpenGraph::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+
+        //OpenGraph::addProperty('type', 'articles');
+
+        TwitterCard::setTitle(settings('system_name') . ' - ' . getTranslatedWords('contact us'));
+
+        JsonLd::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+        JsonLd::setDescription(settings('meta_description'));
+
+        // OR
+
+        SEOTools::setTitle(settings('system_name') . ' - ' . settings('meta_title'));
+        SEOTools::setDescription(settings('meta_description'));
+        return view('front.gallery');
+    }
 }

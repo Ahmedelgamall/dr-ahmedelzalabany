@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Service;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Artisan;
 
 class ServicesController extends Controller
 {
@@ -97,20 +97,34 @@ class ServicesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|max:2024'
+            'image' => 'required|image|max:2024',
+            'faqs' => 'nullable|array',
+            'faqs.*.question' => 'required|string',
+            'faqs.*.answer' => 'required|string',
         ]);
 
         validate_trans($request, [
             ['title', 'required'],
             ['description', 'required'],
         ]);
-        $data = $request->except(['image']);
+        $data = $request->except(['image','first_image','last_image']);
         if ($request->image != '') {
             $image = upload_image($request, 'image', 150, 150, 'settings');
             $data['image'] = $image;
         }
-        $row = Service::create($data);
 
+        if ($request->first_image != '') {
+            $image = upload_image($request, 'first_image', null, null, 'settings');
+            $data['first_image'] = $image;
+        }
+
+        if ($request->last_image != '') {
+            $image = upload_image($request, 'last_image', null, null, 'settings');
+            $data['last_image'] = $image;
+        }
+        
+        $row = Service::create($data);
+        Artisan::call('generate:site-map');
         return redirect()->to(route('services.index'))->with('success', getTranslatedWords('created successfully'));
 
     }
@@ -148,22 +162,36 @@ class ServicesController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'image' => 'nullable|image|max:2024'
+            'image' => 'nullable|image|max:2024',
+            'faqs' => 'nullable|array',
+            'faqs.*.question' => 'required|string',
+            'faqs.*.answer' => 'required|string',
         ]);
 
         validate_trans($request, [
             ['title', 'required'],
             ['description', 'required'],
         ]);
-        $data = $request->except(['image']);
+
+        $data = $request->except(['image','first_image','last_image']);
         if ($request->image != '') {
             $image = upload_image($request, 'image', 150, 150, 'settings');
             $data['image'] = $image;
         }
 
+        if ($request->first_image != '') {
+            $image = upload_image($request, 'first_image', null, null, 'settings');
+            $data['first_image'] = $image;
+        }
+
+        if ($request->last_image != '') {
+            $image = upload_image($request, 'last_image', null, null, 'settings');
+            $data['last_image'] = $image;
+        }
+
         $row = Service::findOrFail($id);
         $row->update($data);
-
+        Artisan::call('generate:site-map');
         return redirect()->to(route('services.index'))->with('success', getTranslatedWords('edited successfully'));
     }
 

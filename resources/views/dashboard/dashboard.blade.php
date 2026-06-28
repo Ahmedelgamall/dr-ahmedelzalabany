@@ -1,22 +1,22 @@
 @extends('dashboard.layouts.app')
 @section('title', content: getTranslatedWords('home'))
 @section('js')
-<script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js') }}"></script>
-<script>
-     let table = $('#datatables').DataTable({
-        
-        order: [
-            [0, "desc"]
-        ],
-        @if(App::getLocale()=='ar')
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Arabic.json"
-        },
-        @endif
-       
-        responsive: true,
-    });
-</script>
+    <script src="{{ asset('assets/extra-libs/DataTables/datatables.min.js') }}"></script>
+    <script>
+        let table = $('#datatables').DataTable({
+
+            order: [
+                [0, "desc"]
+            ],
+            @if (App::getLocale() == 'ar')
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Arabic.json"
+                },
+            @endif
+
+            responsive: true,
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -69,7 +69,7 @@
                                     class="rounded" />
                             </div>
 
-                            
+
 
                         </div>
                         <span class="fw-semibold d-block mb-1">{{ getTranslatedWords('branches') }}</span>
@@ -90,24 +90,24 @@
                                     class="rounded" />
                             </div>
 
-                           
+
 
                         </div>
                         <span>{{ getTranslatedWords('contacts') }}</span>
                         <h3 class="card-title mb-1 profits_count">{{ App\Models\Contact::count() }}</h3>
-                       
+
                     </div>
                 </div>
             </div>
             <!-- Total Revenue -->
-           
+
             <!--/ Total Revenue -->
 
         </div>
 
 
         <div class="row">
-           
+
             <!-- Expense Overview -->
             <div class="col-md-12 col-lg-12 order-1 mb-4">
                 <div class="card">
@@ -120,22 +120,22 @@
                                     <th>{{ getTranslatedWords('name') }}</th>
                                     <th>{{ getTranslatedWords('phone') }}</th>
                                     <th>{{ getTranslatedWords('appointment date') }}</th>
-                                    <th>{{ getTranslatedWords('radians type') }}</th>
-                                    <th>{{ getTranslatedWords('branch') }}</th>
+                                    {{-- <th>{{ getTranslatedWords('radians type') }}</th> --}}
+                                    <th>{{ getTranslatedWords('service') }}</th>
                                     <th>{{ getTranslatedWords('created_at') }}</th>
-                                    
+
 
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
                                 @foreach (App\Models\Appointment::latest()->take(15)->get() as $query)
                                     <tr>
-                                        <td>{{$query->id}}</td>
+                                        <td>{{ $query->id }}</td>
                                         <td>{{ $query->name }}</td>
                                         <td>{{ $query->phone }}</td>
-                                        <td>{{ $query->date }} {{ getTranslatedWords(''.$query->time) }}</td>
-                                        <td>{{ $query->type }}</td>
-                                        <td>{{ $query->branch->name ?? '' }}</td>
+                                        <td>{{ $query->date }} {{ getTranslatedWords('' . $query->time) }}</td>
+                                        {{--  <td>{{ $query->type }}</td> --}}
+                                        <td>{{ $query->service->name ?? '' }}</td>
                                         <td>{{ $query->created_at->format('Y-m-d') }}</td>
 
                                     </tr>

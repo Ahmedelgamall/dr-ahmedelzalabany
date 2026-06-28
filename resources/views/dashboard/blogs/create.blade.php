@@ -15,7 +15,9 @@
         tags: true
         , tokenSeparators: [',']
     });
-    $('.ckeditor').ckeditor();
+    $('.ckeditor').ckeditor(function() {}, {
+    allowedContent: true
+});
 
 </script>
 @endsection
@@ -75,6 +77,18 @@
                                 @enderror
                             </div>
 
+                            
+
+                            
+
+                             <div class="mb-3 col-md-6">
+                                <label for="email" class="form-label">{{ getTranslatedWords('slug') }}</label>
+                                <input type="text" value="{{ old('slug') }}" class="form-control" name="slug" placeholder="{{ getTranslatedWords('slug') }}">
+                                @error('slug')
+                                <div class="text-danger">{{ $errors->first('slug') }}</div>
+                                @enderror
+                            </div>
+
                             <div class="mb-3 col-md-6">
                                 <label for="email" class="form-label">{{ getTranslatedWords('body') }}</label>
                                 <textarea class="form-control ckeditor" name="body" placeholder="{{ getTranslatedWords('body') }}">
@@ -91,6 +105,13 @@
                                 </textarea>
                                 @error('meta_description')
                                 <div class="text-danger">{{ $errors->first('meta_description') }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="email" class="form-label">{{ getTranslatedWords('meta title') }}</label>
+                                <input type="text" value="{{ old('meta_title') }}" class="form-control" name="meta_title" placeholder="{{ getTranslatedWords('meta title') }}">
+                                @error('meta_title')
+                                <div class="text-danger">{{ $errors->first('meta_title') }}</div>
                                 @enderror
                             </div>
                             {{--<div class="mb-3 col-md-6">
