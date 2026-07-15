@@ -149,9 +149,9 @@
                             <img src="{{ route('file_show', [$s->image, 'settings']) }}" alt="Icon">
                         </div>
                         <h4 class="title"><a href="{{ route('service', $s->id) }}">{{$s->title}}</a></h4>
-                        <p>
+                        {{--<p>
                             {!! Illuminate\Support\Str::words($s->description,10,'...') !!}
-                        </p>
+                        </p>--}}
 
                         <div class="box-link-wrap">
                             <span class="link-icon"><i class="far fa-plus"></i></span>
